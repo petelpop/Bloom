@@ -2,7 +2,7 @@ import 'package:logger/logger.dart';
 
 class LoggerService {
   static final Logger _logger = Logger(
-    level: Level.debug,
+    level: Level.info,
     printer: PrettyPrinter(),
   );
 

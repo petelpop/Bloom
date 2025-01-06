@@ -1,5 +1,7 @@
 import 'package:bloom/common/constants.dart';
+import 'package:bloom/feature/onboarding/presentation/views/onboarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      
+      context.pushNamed(OnboardingPage.routeName);
     });
   }
 
