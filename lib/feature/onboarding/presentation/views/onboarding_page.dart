@@ -4,6 +4,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/feature/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:bloom/feature/onboarding/presentation/methods/onboarding_dots.dart';
 import 'package:bloom/feature/onboarding/presentation/methods/onboarding_list.dart';
@@ -122,7 +123,9 @@ class OnboardingPage extends StatelessWidget {
                         children: [
                           PrimaryButton(
                             text: "Skip",
-                            function: () {},
+                            function: () {
+                              context.pushNamed(HomePage.routeName);
+                            },
                             fontSize: 16,
                             fontWeight: 700,
                             textColor: primaryColor600,
@@ -136,11 +139,11 @@ class OnboardingPage extends StatelessWidget {
                             text: state.isLastPage == true ? "Selesai" : "Lanjut",
                             function: () {
                               if (state.isLastPage == true) {
-                                context.pushNamed('name');
+                                context.pushNamed(HomePage.routeName);
                               } else {
                                 _pageController.nextPage(
                                   duration: const Duration(milliseconds: 200), 
-                                  curve: Curves.easeIn);
+                                  curve: Curves.linear);
                               }
                             },
                           ),

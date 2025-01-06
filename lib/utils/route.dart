@@ -1,3 +1,4 @@
+import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/feature/onboarding/presentation/views/onboarding_page.dart';
 import 'package:bloom/feature/splash/presentation/views/splash_page.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,12 @@ class AppRoute {
           name: OnboardingPage.routeName,
           builder:(context, state) {
             return OnboardingPage();
-          },)
+          },),
+          GoRoute(
+            path: '/${HomePage.routeName}',
+            name: HomePage.routeName,
+            builder: (context, state) {
+              return HomePage();
+            },)
     ]);
 }

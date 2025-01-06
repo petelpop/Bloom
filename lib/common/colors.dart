@@ -22,3 +22,10 @@ Color primaryColor700 = const Color(0xFF007C5C);
 Color primaryColor800 = const Color(0xFF036249);
 Color primaryColor900 = const Color(0xFF04503E);
 Color primaryColor950 = const Color(0xFF012D24);
+
+Color surface100 = const Color(0xFFFFFFFF);
+Color surface200 = const Color(0xFFF9FAFC);
+Color surface300 = const Color(0xFFF2F5F8);
+Color surface400 = const Color(0xFFECEFF5);
+Color surface500 = const Color(0xFFE5EAF1);
+Color surface600 = const Color(0xFFDFE5EE);
