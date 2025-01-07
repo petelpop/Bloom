@@ -7,6 +7,7 @@ class Constants {
   static const String icTrash = "$iconsPath/ic_trash.png";
 
   static const String imagePath = "assets/image";
+  static const String imgPlaceHolder = "$imagePath/img_placeholder.png";
   static const String bgSplashScreen = "$imagePath/bg_splash_screen.png";
   static const String onBoardingFirst = "$imagePath/onboarding_first.png";
   static const String onBoardingSecond = "$imagePath/onboarding_second.png";
