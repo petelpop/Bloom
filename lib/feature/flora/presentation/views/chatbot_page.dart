@@ -25,7 +25,9 @@ class _ChatbotPageState extends State<ChatbotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DashChat(
-          currentUser: currentUser, onSend: _sendMessage, messages: messages),
+          currentUser: currentUser, 
+          onSend: _sendMessage, 
+          messages: messages),
     );
   }
 
@@ -40,14 +42,17 @@ class _ChatbotPageState extends State<ChatbotPage> {
         if (lastMessage != null && lastMessage.user == geminiUser) {
           lastMessage = messages.removeAt(0);
           String response = event.content?.parts
-              ?.fold("", (previous, current) => "$previous $current") ?? "";
+            ?.whereType<TextPart>() 
+            .fold("", (previous, current) => "$previous ${current.text}") ?? "";
+
               lastMessage.text += response;
               setState(() {
                 messages = [lastMessage!, ...messages];
               });
         } else {
           String response = event.content?.parts
-              ?.fold("", (previous, current) => "$previous $current") ?? "";
+            ?.whereType<TextPart>() 
+            .fold("", (previous, current) => "$previous ${current.text}") ?? "";
           ChatMessage message = ChatMessage(
               user: geminiUser, 
               createdAt: DateTime.now(),
@@ -63,3 +68,4 @@ class _ChatbotPageState extends State<ChatbotPage> {
   }
 
 }
+
