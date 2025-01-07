@@ -1,6 +1,7 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/common/shimmer_card.dart';
 import 'package:bloom/feature/article/data/article_dummy.dart';
 import 'package:bloom/feature/article/presentation/methods/article_item.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
@@ -65,10 +66,11 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");
                     if (state is AqiLoading) {
-                      return StatusWidget(
-                        city: "...",
-                        aqi: "0",
-                      );
+                      return ShimmerCard(
+                        height: 180,
+                        width: double.infinity,
+                        radius: 16,
+                        );
                     }
                     if (state is AqiLoaded) {
                       LoggerService.info("ini city dari aqi ${state.data?.city?.name}");
@@ -84,11 +86,12 @@ class _HomePageState extends State<HomePage> {
                         aqi: "0",
                       );
                     }
-                    return StatusWidget(
-                      city: "...",
-                      aqi: "0",
-                    );
-                  },
+                      return ShimmerCard(
+                        height: 180,
+                        width: double.infinity,
+                        radius: 16,
+                        );
+                      }
                 ),
                 SizedBox(height: 22),
                 PrimaryText(
