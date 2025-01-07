@@ -4,10 +4,14 @@ import 'package:bloom/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
   await dotenv.load();
+    Gemini.init(
+    apiKey: dotenv.env["GEMINI_TOKEN"].toString()
+  );
   runApp(const MyApp());
 }
 

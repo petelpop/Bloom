@@ -11,6 +11,7 @@ class Constants {
   static const String icDangerTriangleDarkRed = "$iconsPath/ic_danger_triangle_dark_red.png";
   static const String icDangerTrianglePurple = "$iconsPath/ic_danger_triangle_purple.png";
   static const String icLocation = "$iconsPath/ic_location.png";
+  static const String icFloraProfile = "$iconsPath/ic_flora_profile.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";

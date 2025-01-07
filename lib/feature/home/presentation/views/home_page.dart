@@ -4,14 +4,15 @@ import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
 import 'package:bloom/feature/article/data/article_dummy.dart';
 import 'package:bloom/feature/article/presentation/methods/article_item.dart';
+import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
-import 'package:bloom/feature/home/presentation/methods/aqi_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_widget.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "home-page";
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,14 +50,14 @@ class _HomePageState extends State<HomePage> {
                     lineHeight: 1.4,
                     fontWeight: 700,
                     fontSize: 18),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 PrimaryText(
                   text: "Sudahkah kamu memulai langkah kecil hari ini?",
                   color: neutralTertiary,
                   lineHeight: 1.4,
                   letterSpacing: -0.1,
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 BlocConsumer<AqiCubit, AqiState>(
                   listener: (context, state) {
                     if (state is AqiLoadedLocation) {
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");
                     if (state is AqiLoading) {
-                      return ShimmerCard(
+                      return const ShimmerCard(
                         height: 180,
                         width: double.infinity,
                         radius: 16,
@@ -80,20 +81,21 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     if (state is AqiFailed) {
+                      //TODO: create failed condition
                       return StatusWidget(
                         city:
                             "Gagal mendapatkan data lokasi, silahkan coba lagi!",
                         aqi: "0",
                       );
                     }
-                      return ShimmerCard(
+                      return const ShimmerCard(
                         height: 180,
                         width: double.infinity,
                         radius: 16,
                         );
                       }
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 PrimaryText(
                   text: "SHORTCUT",
                   fontWeight: 700,
@@ -102,14 +104,19 @@ class _HomePageState extends State<HomePage> {
                   letterSpacing: -0.1,
                   lineHeight: 1.4,
                 ),
-                SizedBox(height: 14),
+                const SizedBox(height: 14),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ShortcutWidget(
-                        icon: Constants.icBox,
-                        text: "Pilah Sampah",
-                        desc: "Sebelum dibuang, pilah dulu!"),
+                    InkWell(
+                      onTap: () {
+                        context.pushNamed(ChatbotPage.routeName);
+                      },
+                      child: ShortcutWidget(
+                          icon: Constants.icBox,
+                          text: "Pilah Sampah",
+                          desc: "Sebelum dibuang, pilah dulu!"),
+                    ),
                     ShortcutWidget(
                         icon: Constants.icChatDots,
                         text: "Tanya Flora",
@@ -117,8 +124,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 14, bottom: 24),
-                  constraints: BoxConstraints(minHeight: 69, maxHeight: 71),
+                  margin: const EdgeInsets.only(top: 14, bottom: 24),
+                  constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
@@ -144,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset(Constants.icTrash),
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -183,9 +190,9 @@ class _HomePageState extends State<HomePage> {
                   letterSpacing: -0.1,
                   color: neutralTertiary,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: articleDummyTitle.length,
                     shrinkWrap: true,
                     gridDelegate:
