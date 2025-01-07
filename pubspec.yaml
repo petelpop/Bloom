@@ -55,6 +55,12 @@ dependencies:
   # Sizer
   sizer: ^3.0.0
 
+  # Location
+  geolocator: ^13.0.2
+
+  
+  fpdart: ^1.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
