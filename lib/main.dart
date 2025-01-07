@@ -1,9 +1,13 @@
+import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/utils/route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -12,21 +16,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ResponsiveSizer(
-      builder:(context, orientation, screenType) {
-        return MaterialApp.router(
-        title: 'Bloom',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        routeInformationParser: AppRoute.router.routeInformationParser,
-        routerDelegate: AppRoute.router.routerDelegate,
-        routeInformationProvider: AppRoute.router.routeInformationProvider,
-        debugShowCheckedModeBanner: false,
-      );
-      } 
-
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AqiCubit())
+      ],
+      child: ResponsiveSizer(
+        builder:(context, orientation, screenType) {
+          return MaterialApp.router(
+          title: 'Bloom',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          routeInformationParser: AppRoute.router.routeInformationParser,
+          routerDelegate: AppRoute.router.routerDelegate,
+          routeInformationProvider: AppRoute.router.routeInformationProvider,
+          debugShowCheckedModeBanner: false,
+        );
+        } 
+      
+      ),
     );
   }
 }

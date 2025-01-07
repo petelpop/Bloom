@@ -1,10 +1,18 @@
 import 'package:logger/logger.dart';
 
 class LoggerService {
-  static final Logger _logger = Logger(
-    level: Level.info,
-    printer: PrettyPrinter(),
+  static final _logger = Logger(
+    printer: PrettyPrinter(
+      stackTraceBeginIndex: 0,
+      methodCount: 0,
+      errorMethodCount: 5,
+      lineLength: 70,
+      colors: true,
+      printEmojis: false,
+      printTime: true,
+    ),
   );
+
 
   static void log(String message) {
     _logger.d(message);
