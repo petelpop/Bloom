@@ -128,6 +128,7 @@ class StatusWidget extends StatelessWidget {
                             Constants.icLocation,
                             width: 16,
                           ),
+                          SizedBox(width: 4),
                           PrimaryText(
                             text: city,
                             letterSpacing: -0.1,
