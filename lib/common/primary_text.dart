@@ -10,6 +10,8 @@ class PrimaryText extends StatelessWidget {
   double? letterSpacing;
   double? lineHeight;
   TextAlign? textAlign;
+  TextOverflow? textOverflow;
+  int? maxLines;
 
   PrimaryText({
     super.key, 
@@ -19,7 +21,9 @@ class PrimaryText extends StatelessWidget {
     this.fontWeight = 400,
     this.textAlign = null,
     this.letterSpacing = 0,
-    this.lineHeight = 0});
+    this.lineHeight = 0,
+    this.textOverflow = null,
+    this.maxLines = null});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,8 @@ class PrimaryText extends StatelessWidget {
         height: lineHeight
       ),
       textAlign: textAlign,
+      overflow: textOverflow,
+      maxLines: maxLines,
     );
   }
 }
