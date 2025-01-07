@@ -5,6 +5,12 @@ class Constants {
   static const String icBox = "$iconsPath/ic_box.png";
   static const String icChatDots = "$iconsPath/ic_chat_dots.png";
   static const String icTrash = "$iconsPath/ic_trash.png";
+  static const String icMask = "$iconsPath/ic_mask.png";
+  static const String icDanger = "$iconsPath/ic_danger.png";
+  static const String icDangerTriangleRed = "$iconsPath/ic_danger_triangle_red.png";
+  static const String icDangerTriangleDarkRed = "$iconsPath/ic_danger_triangle_dark_red.png";
+  static const String icDangerTrianglePurple = "$iconsPath/ic_danger_triangle_purple.png";
+  static const String icLocation = "$iconsPath/ic_location.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";

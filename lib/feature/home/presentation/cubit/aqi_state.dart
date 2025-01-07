@@ -28,3 +28,26 @@ final class AqiFailed extends AqiState {
   @override
   List<Object> get props => [message];
 }
+
+final class AqiLoadingLocation extends AqiState {}
+
+final class AqiLoadedLocation extends AqiState {
+  final String lat;
+  final String lng;
+
+  AqiLoadedLocation({required this.lat, required this.lng});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [lat, lng];
+}
+
+final class AqiLocationFailed extends AqiState {
+  final String message;
+
+  AqiLocationFailed({required this.message});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [message];
+}

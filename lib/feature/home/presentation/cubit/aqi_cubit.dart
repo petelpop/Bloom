@@ -3,6 +3,8 @@ import 'package:bloom/feature/home/data/model/aqi_model.dart';
 import 'package:bloom/feature/home/data/services/aqi_services.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 part 'aqi_state.dart';
 
@@ -32,5 +34,38 @@ class AqiCubit extends Cubit<AqiState> {
     } on DioException catch (e) {
       emit(AqiFailed(message: e.toString()));
     }
+  }
+
+  void getLocation() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  emit(AqiLoadingLocation());
+
+  try {
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    emit(AqiLocationFailed(message: 'Location services are disabled.'));
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      emit(AqiLocationFailed(message: 'Location permissions are denied'));
+    }
+  }
+  
+  if (permission == LocationPermission.deniedForever) {
+    emit(AqiLocationFailed(message: 'Location permissions are permanently denied, we cannot request permissions.'));
+  } 
+
+  Position position = await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.high
+  );
+  emit(AqiLoadedLocation(lat: position.latitude.toString(), lng: position.latitude.toString()));
+  } catch (e) {
+  emit(AqiLocationFailed(message: "error: $e")); 
+  }
   }
 }

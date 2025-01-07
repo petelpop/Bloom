@@ -3,7 +3,14 @@ import 'package:bloom/common/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class AqiWidget extends StatelessWidget {
-  const AqiWidget({super.key});
+  Color? aqiColor;
+  String? aqi;
+
+  AqiWidget({
+    super.key, 
+    this.aqiColor = const Color(0xFF008F66),
+    this.aqi,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +18,7 @@ class AqiWidget extends StatelessWidget {
       width: 72,
       height: 72,
       decoration: BoxDecoration(
-        color: primaryColor600,
+        color: aqiColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: whiteColor.withOpacity(0.12),
@@ -24,7 +31,7 @@ class AqiWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PrimaryText(
-            text: "50",
+            text: aqi,
             fontSize: 26,
             letterSpacing: -0.1,
             color: whiteColor,
