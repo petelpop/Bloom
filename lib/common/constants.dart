@@ -25,6 +25,8 @@ class Constants {
   static const String icFloraUnselect = "$iconsPath/ic_flora_unselect.png";
   static const String icTerraSelected = "$iconsPath/ic_terra_selected.png";
   static const String icTerraUnselect = "$iconsPath/ic_terra_unselect.png";
+  static const String icCamera = "$iconsPath/ic_camera.png";
+  static const String icImage = "$iconsPath/ic_image.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";
@@ -33,4 +35,5 @@ class Constants {
   static const String onBoardingSecond = "$imagePath/onboarding_second.png";
   static const String onBoardingThird = "$imagePath/onboarding_third.png";
   static const String imgSparklesBg = "$imagePath/img_sparkles_bg.png";
+  static const String imgTrashBg = "$imagePath/img_trash_bg.png";
 }
