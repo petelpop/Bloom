@@ -1,9 +1,12 @@
+import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
+import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 
 class ChatbotPage extends StatefulWidget {
   static const String routeName = 'chatbot-page';
@@ -22,12 +25,45 @@ class _ChatbotPageState extends State<ChatbotPage> {
       id: "1", firstName: "Flora", profileImage: Constants.icFloraProfile);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    messages = [
+      ChatMessage(
+        user: geminiUser,
+        text: "Hello, how are you?",
+        createdAt: DateTime.now()
+      ),
+    ];
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFDFDFD),
       body: DashChat(
           currentUser: currentUser, 
           onSend: _sendMessage, 
-          messages: messages),
+          messages: messages,
+          inputOptions: InputOptions(
+            alwaysShowSend: true,
+            textInputAction: TextInputAction.send,
+            inputTextStyle: TextStyle(
+                      fontFamily: 'Satoshi',
+        fontVariations: [
+          FontVariation(
+            "wght", 400)
+        ],
+            )
+          ),
+          messageOptions: MessageOptions(
+            showOtherUsersAvatar: false,
+            showOtherUsersName: false,
+            showTime: true,
+            currentUserContainerColor: whiteColor,
+            currentUserTextColor: neutralDefault,
+            messageDecorationBuilder: messageDecoration,
+          ),
+          ),
     );
   }
 
@@ -43,7 +79,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
           lastMessage = messages.removeAt(0);
           String response = event.content?.parts
             ?.whereType<TextPart>() 
-            .fold("", (previous, current) => "$previous ${current.text}") ?? "";
+            .fold("", (previous, current) => "$previous  ${current.text}") ?? "";
 
               lastMessage.text += response;
               setState(() {
@@ -52,7 +88,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
         } else {
           String response = event.content?.parts
             ?.whereType<TextPart>() 
-            .fold("", (previous, current) => "$previous ${current.text}") ?? "";
+            .fold("", (previous, current) => "$previous  ${current.text}") ?? "";
           ChatMessage message = ChatMessage(
               user: geminiUser, 
               createdAt: DateTime.now(),
