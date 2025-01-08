@@ -1,0 +1,3 @@
+0 Organik
+1 Anorganik
+2 B3

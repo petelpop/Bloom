@@ -99,6 +99,7 @@ flutter:
     - assets/image/
     - assets/icons/
     - assets/fonts/
+    - assets/model/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
