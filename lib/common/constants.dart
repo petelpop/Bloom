@@ -15,6 +15,16 @@ class Constants {
   static const String icAvailableSend = "$iconsPath/ic_available_send.png";
   static const String icUnavailableSend = "$iconsPath/ic_unavailable_send.png";
   static const String icRefresh = "$iconsPath/ic_refresh.png";
+  static const String icHomeSelected = "$iconsPath/ic_home_selected.png";
+  static const String icHomeUnselect = "$iconsPath/ic_home_unselect.png";
+  static const String icPilahSelected = "$iconsPath/ic_pilah_selected.png";
+  static const String icPilahUnselect = "$iconsPath/ic_pilah_unselect.png";
+  static const String icLokaSelected = "$iconsPath/ic_loka_selected.png";
+  static const String icLokaUnselect = "$iconsPath/ic_loka_unselect.png";
+  static const String icFloraSelected = "$iconsPath/ic_flora_selected.png";
+  static const String icFloraUnselect = "$iconsPath/ic_flora_unselect.png";
+  static const String icTerraSelected = "$iconsPath/ic_terra_selected.png";
+  static const String icTerraUnselect = "$iconsPath/ic_terra_unselect.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";
