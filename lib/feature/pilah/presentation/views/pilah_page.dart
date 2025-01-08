@@ -24,35 +24,7 @@ class PilahPage extends StatefulWidget {
 }
 
 class _PilahPageState extends State<PilahPage> {
-  File? filePath;
 
-  Future<void> pickImage(ImageSource source) async {
-  try {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: source);
-
-    if (image == null) {
-      print("Image selection canceled.");
-      return;
-    }
-
-    var imageFile = File(image.path);
-
-    if (!await imageFile.exists()) {
-      print("File does not exist.");
-      return;
-    }
-
-    setState(() {
-      filePath = imageFile;
-    });
-
-    await context.read<PilahCubit>().predictImage(image.path, imageFile);
-    print("Image prediction triggered.");
-  } catch (e) {
-    print("Error picking or processing image: $e");
-  }
-}
   @override
   void initState() {
     // TODO: implement initState
@@ -106,7 +78,7 @@ class _PilahPageState extends State<PilahPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            pickImage(ImageSource.camera);
+                            context.read<PilahCubit>().pickImage(context, ImageSource.camera);
                           },
                           child: ShortcutWidget(
                               icon: Constants.icCamera,
@@ -115,7 +87,7 @@ class _PilahPageState extends State<PilahPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            pickImage(ImageSource.gallery);
+                            context.read<PilahCubit>().pickImage(context, ImageSource.gallery);
                           },
                           child: ShortcutWidget(
                               icon: Constants.icImage,

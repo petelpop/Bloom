@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:bloom/feature/pilah/data/model/pilah.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'dart:developer' as devtools;
+
+import 'package:image_picker/image_picker.dart';
 
 part 'pilah_state.dart';
 
@@ -49,4 +53,29 @@ class PilahCubit extends Cubit<PilahState> {
       devtools.log("Error loading model: $e");
     }
   }
+
+
+  Future<void> pickImage(BuildContext context, ImageSource source) async {
+  try {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: source);
+
+    if (image == null) {
+      print("Image selection canceled.");
+      return;
+    }
+
+    var imageFile = File(image.path);
+
+    if (!await imageFile.exists()) {
+      print("File does not exist.");
+      return;
+    }
+
+    context.read<PilahCubit>().predictImage(image.path, imageFile);
+    print("Image prediction triggered.");
+  } catch (e) {
+    print("Error picking or processing image: $e");
+  }
+}
 }
