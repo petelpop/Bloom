@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFDFDFD),
       body: RefreshIndicator(
         onRefresh: () async {
               context.read<AqiCubit>().getLocation();

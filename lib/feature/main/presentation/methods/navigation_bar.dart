@@ -20,7 +20,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
+            boxShadow: [
           BoxShadow(
             color: neutralGray.withOpacity(0.3),
             spreadRadius: 5,
@@ -28,6 +28,10 @@ class BottomNavBar extends StatelessWidget {
             offset: const Offset(0, 3),
           ),
         ],
+        border: Border.all(
+            color: Color(0xFFF8F8F8),
+            width: 1.5    
+        ),
       ),
       child: BottomAppBar(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,28 +50,6 @@ class BottomNavBar extends StatelessWidget {
               onTap: () => onTap(e.index),
               child: e,
             );
-            // if (items.indexOf(e) == 1) {
-            //   return Padding(
-            //     padding: const EdgeInsets.only(right: 50),
-            //     child: InkWell(
-            //       onTap: () => onTap(e.index),
-            //       child: e,
-            //     ),
-            //   );
-            // } else if (items.indexOf(e) == 2) {
-            //   return Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 12),
-            //     child: InkWell(
-            //       onTap: () => onTap(e.index),
-            //       child: e,
-            //     ),
-            //   );
-            // } else {
-            //   return InkWell(
-            //     onTap: () => onTap(e.index),
-            //     child: e,
-            //   );
-            // }
           }).toList(),
         ),
       ),

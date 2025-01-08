@@ -28,7 +28,9 @@ class BottomNavBarItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(imageSelected == true ? imageSelected : imageUnselect),
+          Image.asset(
+            isSelected == true ? imageSelected : imageUnselect,
+            width: 24,),
           PrimaryText(
             text: title,
             fontSize: 10,

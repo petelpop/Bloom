@@ -10,14 +10,15 @@ import 'package:bloom/feature/terra/presentation/views/article_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Mainpage extends StatefulWidget {
-  const Mainpage({super.key});
+class MainPage extends StatefulWidget {
+  static const String routeName = 'main-page';
+  const MainPage({super.key});
 
   @override
-  State<Mainpage> createState() => _MainpageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MainpageState extends State<Mainpage> {
+class _MainPageState extends State<MainPage> {
   List<Widget> listPage(int page) => [
         HomePage(),
         PilahPage(),
@@ -25,6 +26,13 @@ class _MainpageState extends State<Mainpage> {
         FloraPage(),
         ArticlePage()
       ];
+
+      @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<MainPageCubit>().setPage(0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +68,7 @@ class _MainpageState extends State<Mainpage> {
                     isSelected: state.index == 2, 
                     title: "Loka", 
                     imageSelected: Constants.icLokaSelected, 
-                    imageUnselect: Constants.icLokaSelected),
+                    imageUnselect: Constants.icLokaUnselect),
                     BottomNavBarItem(
                     index: 3, 
                     isSelected: state.index == 3, 

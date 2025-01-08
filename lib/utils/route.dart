@@ -1,6 +1,7 @@
 import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';
+import 'package:bloom/feature/main/presentation/views/main_page.dart';
 import 'package:bloom/feature/onboarding/presentation/views/onboarding_page.dart';
 import 'package:bloom/feature/splash/presentation/views/splash_page.dart';
 import 'package:go_router/go_router.dart';
@@ -21,6 +22,12 @@ class AppRoute {
           builder:(context, state) {
             return OnboardingPage();
           }),
+          GoRoute(
+            path: '/${MainPage.routeName}',
+            name: MainPage.routeName,
+            builder: (context, state) {
+              return const MainPage();
+            },),
           GoRoute(
             path: '/${HomePage.routeName}',
             name: HomePage.routeName,
