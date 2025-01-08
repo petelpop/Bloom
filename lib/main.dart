@@ -1,5 +1,6 @@
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/main/cubit/main_page_cubit.dart';
+import 'package:bloom/feature/pilah/presentation/cubit/pilah_cubit.dart';
 import 'package:bloom/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AqiCubit()),
-        BlocProvider(create: (context) => MainPageCubit())
+        BlocProvider(create: (context) => MainPageCubit()),
+        BlocProvider(create: (context) => PilahCubit())
       ],
       child: ResponsiveSizer(
         builder:(context, orientation, screenType) {

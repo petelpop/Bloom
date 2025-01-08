@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<AqiCubit>().getLocation();
+    // context.read<AqiCubit>().getLocation();
   }
 
   @override
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFFDFDFD),
       body: RefreshIndicator(
         onRefresh: () async {
-              context.read<AqiCubit>().getLocation();
+              // context.read<AqiCubit>().getLocation();
         },
         color: primaryColor600,
         child: SafeArea(
