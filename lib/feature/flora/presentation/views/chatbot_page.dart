@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
@@ -8,8 +6,6 @@ import 'package:bloom/utils/logger_service.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
 
 class ChatbotPage extends StatefulWidget {
   static const String routeName = 'chatbot-page';

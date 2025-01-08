@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bloom/common/colors.dart';
-import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';

@@ -1,5 +1,4 @@
 import 'package:bloom/common/colors.dart';
-import 'package:bloom/common/primary_text.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

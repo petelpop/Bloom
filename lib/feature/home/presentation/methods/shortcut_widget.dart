@@ -1,5 +1,4 @@
 import 'package:bloom/common/colors.dart';
-import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:flutter/material.dart';
 

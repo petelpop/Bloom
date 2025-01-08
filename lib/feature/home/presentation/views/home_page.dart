@@ -4,7 +4,6 @@ import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
 import 'package:bloom/feature/article/data/article_dummy.dart';
 import 'package:bloom/feature/article/presentation/methods/article_item.dart';
-import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
