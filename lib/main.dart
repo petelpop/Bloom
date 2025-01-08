@@ -1,5 +1,4 @@
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
-import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,7 +3,6 @@ import 'package:bloom/feature/home/data/model/aqi_model.dart';
 import 'package:bloom/feature/home/data/services/aqi_services.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'aqi_state.dart';
