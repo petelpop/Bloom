@@ -21,11 +21,14 @@ class ChatbotPage extends StatefulWidget {
 
 class _ChatbotPageState extends State<ChatbotPage> {
   final Gemini gemini = Gemini.instance;
+  TextEditingController? _textEditingController;
   List<ChatMessage> messages = [];
+  String? textValue;
 
   ChatUser currentUser = ChatUser(id: "0", firstName: "Me");
   ChatUser geminiUser = ChatUser(
       id: "1", firstName: "Flora", profileImage: Constants.icFloraProfile);
+
 
   @override
   void initState() {
@@ -33,67 +36,136 @@ class _ChatbotPageState extends State<ChatbotPage> {
     super.initState();
     messages = [
       ChatMessage(
-        user: geminiUser,
-        text: "Hello, how are you?",
-        createdAt: DateTime.now()
-      ),
+          user: geminiUser,
+          text: "Hello, how are you?",
+          createdAt: DateTime.now()),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFDFDFD),
+      backgroundColor: const Color(0xFFFDFDFD),
       appBar: AppBar(
         backgroundColor: whiteColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-          side: BorderSide(
-            strokeAlign: 2,
-            color: Color(0xFFF2F5F8),
-            style: BorderStyle.solid
-          )
-        ),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8)),
+            side: BorderSide(
+                strokeAlign: 2,
+                color: Color(0xFFF2F5F8),
+                style: BorderStyle.solid)),
         title: Row(
           children: [
             Image.asset(
               Constants.icFloraProfile,
               width: 30,
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             PrimaryText(
               text: "Flora",
               fontSize: 18,
               fontWeight: 700,
               letterSpacing: -0.2,
               lineHeight: 1.4,
-              color: neutralDefault,)
+              color: neutralDefault,
+            )
           ],
         ),
       ),
       body: DashChat(
-          currentUser: currentUser, 
-          onSend: _sendMessage, 
-          messages: messages,
-          inputOptions: InputOptions(
+        currentUser: currentUser,
+        onSend: _sendMessage,
+        messages: messages,
+        readOnly: false,
+        inputOptions: InputOptions(
+          textController: _textEditingController,
+          onTextChange: (value) {
+            setState(() {
+              textValue = value;
+            });
+          },
+          sendButtonBuilder: (send) {
+            if (textValue?.isEmpty == true || textValue == null) {
+              return Container(
+                margin: const EdgeInsets.only(left: 12),
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: neutralGray,
+                  borderRadius: BorderRadius.circular(14)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(Constants.icUnavailableSend, width: 0.15,),
+                ),
+              );
+            } else {
+              return Container(
+                margin: const EdgeInsets.only(left: 12),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: send,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: primaryColor600,
+                      borderRadius: BorderRadius.circular(14)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(Constants.icAvailableSend, width: 0.15,),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
             alwaysShowSend: true,
             textInputAction: TextInputAction.send,
-            inputTextStyle: TextStyle(
-                      fontFamily: 'Satoshi',
-        fontVariations: [
-          FontVariation(
-            "wght", 400)
-        ],
-            )
-          ),
-          messageOptions: MessageOptions(
+            inputTextStyle: const TextStyle(
+              fontFamily: 'Satoshi',
+              fontVariations: [FontVariation("wght", 400)],
+            )),
+        messageOptions: MessageOptions(
             showOtherUsersAvatar: false,
             showOtherUsersName: false,
             showTime: true,
             currentUserContainerColor: whiteColor,
             currentUserTextColor: neutralDefault,
             messageDecorationBuilder: messageDecoration,
-          ),
-          ),
+            messageTextBuilder: (ChatMessage currentMessage,
+                ChatMessage? previousMessage, ChatMessage? nextMessage) {
+              if (currentMessage.user.id == "0") {
+                return PrimaryText(
+                  text: currentMessage.text,
+                  letterSpacing: -0.1,
+                  lineHeight: 1.4,
+                  color: neutralDefault,
+                );
+              } else {
+                return PrimaryText(
+                  text: currentMessage.text,
+                  letterSpacing: -0.1,
+                  lineHeight: 1.4,
+                  color: neutralDefault,
+                );
+              }
+            },
+            messageTimeBuilder: (ChatMessage message, bool isCurrentUser) {
+              return PrimaryText(
+                text: formatTime(message.createdAt),
+                fontSize: 10,
+                lineHeight: 1.4,
+                letterSpacing: -0.1,
+                color: currentUser == true ? neutralTertiary : const Color(0xFF979AA2),
+                );
+
+            } 
+            ),
+      ),
     );
   }
 
@@ -107,31 +179,27 @@ class _ChatbotPageState extends State<ChatbotPage> {
         ChatMessage? lastMessage = messages.firstOrNull;
         if (lastMessage != null && lastMessage.user == geminiUser) {
           lastMessage = messages.removeAt(0);
-          String response = event.content?.parts
-            ?.whereType<TextPart>() 
-            .fold("", (previous, current) => "$previous  ${current.text}") ?? "";
+          String response = event.content?.parts?.whereType<TextPart>().fold(
+                  "", (previous, current) => "$previous  ${current.text}") ??
+              "";
 
-              lastMessage.text += response;
-              setState(() {
-                messages = [lastMessage!, ...messages];
-              });
+          lastMessage.text += response;
+          setState(() {
+            messages = [lastMessage!, ...messages];
+          });
         } else {
-          String response = event.content?.parts
-            ?.whereType<TextPart>() 
-            .fold("", (previous, current) => "$previous  ${current.text}") ?? "";
+          String response = event.content?.parts?.whereType<TextPart>().fold(
+                  "", (previous, current) => "$previous  ${current.text}") ??
+              "";
           ChatMessage message = ChatMessage(
-              user: geminiUser, 
-              createdAt: DateTime.now(),
-              text: response);
-              setState(() {
-                messages = [message, ...messages];
-              });
+              user: geminiUser, createdAt: DateTime.now(), text: response);
+          setState(() {
+            messages = [message, ...messages];
+          });
         }
       });
     } catch (e) {
       LoggerService.error(e.toString());
     }
   }
-
 }
-
