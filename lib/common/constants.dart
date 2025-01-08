@@ -14,6 +14,7 @@ class Constants {
   static const String icFloraProfile = "$iconsPath/ic_flora_profile.png";
   static const String icAvailableSend = "$iconsPath/ic_available_send.png";
   static const String icUnavailableSend = "$iconsPath/ic_unavailable_send.png";
+  static const String icRefresh = "$iconsPath/ic_refresh.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";

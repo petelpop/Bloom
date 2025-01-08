@@ -8,6 +8,7 @@ import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
+import 'package:bloom/feature/home/presentation/methods/status_failed_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_widget.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:flutter/material.dart';
@@ -36,180 +37,191 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PrimaryText(
-                    text: "Hi Teman Alam!",
-                    color: neutralDefault,
-                    letterSpacing: -0.2,
+      body: RefreshIndicator(
+        onRefresh: () async {
+              context.read<AqiCubit>().getLocation();
+        },
+        color: primaryColor600,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PrimaryText(
+                      text: "Hi Teman Alam!",
+                      color: neutralDefault,
+                      letterSpacing: -0.2,
+                      lineHeight: 1.4,
+                      fontWeight: 700,
+                      fontSize: 18),
+                  const SizedBox(height: 2),
+                  PrimaryText(
+                    text: "Sudahkah kamu memulai langkah kecil hari ini?",
+                    color: neutralTertiary,
                     lineHeight: 1.4,
-                    fontWeight: 700,
-                    fontSize: 18),
-                const SizedBox(height: 2),
-                PrimaryText(
-                  text: "Sudahkah kamu memulai langkah kecil hari ini?",
-                  color: neutralTertiary,
-                  lineHeight: 1.4,
-                  letterSpacing: -0.1,
-                ),
-                const SizedBox(height: 22),
-                BlocConsumer<AqiCubit, AqiState>(
-                  listener: (context, state) {
-                    if (state is AqiLoadedLocation) {
-                      context.read<AqiCubit>().getAqiData(state.lat, state.lng);
-                    }
-                  },
-                  builder: (context, state) {
-                    LoggerService.error("ini state sekarang $state");
-                    if (state is AqiLoading) {
-                      return const ShimmerCard(
-                        height: 180,
-                        width: double.infinity,
-                        radius: 16,
-                        );
-                    }
-                    if (state is AqiLoaded) {
-                      LoggerService.info("ini city dari aqi ${state.data?.city?.name}");
-                      return StatusWidget(
-                        city: state.data?.city?.name?.split(" ")[0],
-                        aqi: state.data?.aqi.toString(),
-                      );
-                    }
-                    if (state is AqiFailed) {
-                      //TODO: create failed condition
-                      return StatusWidget(
-                        city:
-                            "Gagal mendapatkan data lokasi, silahkan coba lagi!",
-                        aqi: "0",
-                      );
-                    }
-                      return const ShimmerCard(
-                        height: 180,
-                        width: double.infinity,
-                        radius: 16,
+                    letterSpacing: -0.1,
+                  ),
+                  const SizedBox(height: 22),
+                  BlocConsumer<AqiCubit, AqiState>(
+                    listener: (context, state) {
+                      if (state is AqiLoadedLocation) {
+                        context.read<AqiCubit>().getAqiData(state.lat, state.lng);
+                      }
+                    },
+                    builder: (context, state) {
+                      LoggerService.error("ini state sekarang $state");
+                      if (state is AqiLoading) {
+                        return const ShimmerCard(
+                          height: 180,
+                          width: double.infinity,
+                          radius: 16,
+                          );
+                      }
+                      if (state is AqiLoaded) {
+                        LoggerService.info("ini city dari aqi ${state.data?.city?.name}");
+                        return StatusWidget(
+                          city: state.data?.city?.name?.split(" ")[0],
+                          aqi: state.data?.aqi.toString(),
                         );
                       }
-                ),
-                const SizedBox(height: 22),
-                PrimaryText(
-                  text: "SHORTCUT",
-                  fontWeight: 700,
-                  fontSize: 12,
-                  color: neutralAccent2,
-                  letterSpacing: -0.1,
-                  lineHeight: 1.4,
-                ),
-                const SizedBox(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        context.pushNamed(FloraPage.routeName);
-                      },
-                      child: ShortcutWidget(
-                          icon: Constants.icBox,
-                          text: "Pilah Sampah",
-                          desc: "Sebelum dibuang, pilah dulu!"),
-                    ),
-                    ShortcutWidget(
-                        icon: Constants.icChatDots,
-                        text: "Tanya Flora",
-                        desc: "Chatbot AI yang peduli bumi.")
-                  ],
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 14, bottom: 24),
-                  constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: whiteColor,
-                    border: Border.all(color: surface300, width: 1),
-                    boxShadow: [
-                      BoxShadow(
-                          color: blackColor.withOpacity(0.04), blurRadius: 20),
+                      if (state is AqiFailed) {
+                      return InkWell(
+                        onTap: () {
+                          context.read<AqiCubit>().getLocation();
+                        },
+                        child: StatusFailedWidget()
+                        );
+                      }
+                        return const ShimmerCard(
+                          height: 180,
+                          width: double.infinity,
+                          radius: 16,
+                          );
+                        }
+                  ),
+                  const SizedBox(height: 22),
+                  PrimaryText(
+                    text: "SHORTCUT",
+                    fontWeight: 700,
+                    fontSize: 12,
+                    color: neutralAccent2,
+                    letterSpacing: -0.1,
+                    lineHeight: 1.4,
+                  ),
+                  const SizedBox(height: 14),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+
+                        },
+                        child: ShortcutWidget(
+                            icon: Constants.icBox,
+                            text: "Pilah Sampah",
+                            desc: "Sebelum dibuang, pilah dulu!"),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          context.pushNamed(FloraPage.routeName);
+                        },
+                        child: ShortcutWidget(
+                            icon: Constants.icChatDots,
+                            text: "Tanya Flora",
+                            desc: "Chatbot AI yang peduli bumi."),
+                      )
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: surface200),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.5),
-                            child: Image.asset(Constants.icTrash),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            PrimaryText(
-                              text: "Males Cari Tempat Sampah ?",
-                              fontWeight: 700,
-                              lineHeight: 1.4,
-                              letterSpacing: -0.1,
-                              color: neutralDefault,
-                            ),
-                            PrimaryText(
-                              text: "Klik dan temukan tempat sampah terdekat!",
-                              fontSize: 12,
-                              letterSpacing: -0.1,
-                              lineHeight: 1.4,
-                              color: neutralTertiary,
-                            )
-                          ],
-                        )
+                  Container(
+                    margin: const EdgeInsets.only(top: 14, bottom: 24),
+                    constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: whiteColor,
+                      border: Border.all(color: surface300, width: 1),
+                      boxShadow: [
+                        BoxShadow(
+                            color: blackColor.withOpacity(0.04), blurRadius: 20),
                       ],
                     ),
-                  ),
-                ),
-                PrimaryText(
-                  text: "Artikel Terra",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  lineHeight: 1.4,
-                  letterSpacing: -0.1,
-                  color: neutralDefault,
-                ),
-                PrimaryText(
-                  text: "Baca, dan jadi #SiPalingPaham cara menjaga bumi!",
-                  fontSize: 12,
-                  lineHeight: 1.4,
-                  letterSpacing: -0.1,
-                  color: neutralTertiary,
-                ),
-                const SizedBox(height: 16),
-                GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: articleDummyTitle.length,
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 240,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 16,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: surface200),
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.5),
+                              child: Image.asset(Constants.icTrash),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              PrimaryText(
+                                text: "Males Cari Tempat Sampah ?",
+                                fontWeight: 700,
+                                lineHeight: 1.4,
+                                letterSpacing: -0.1,
+                                color: neutralDefault,
+                              ),
+                              PrimaryText(
+                                text: "Klik dan temukan tempat sampah terdekat!",
+                                fontSize: 12,
+                                letterSpacing: -0.1,
+                                lineHeight: 1.4,
+                                color: neutralTertiary,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      return ArticleItem(
-                          title: articleDummyTitle[index],
-                          desc: articleDummyDesc[index],
-                          img: articleDummyImage[index]);
-                    })
-              ],
+                  ),
+                  PrimaryText(
+                    text: "Artikel Terra",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    lineHeight: 1.4,
+                    letterSpacing: -0.1,
+                    color: neutralDefault,
+                  ),
+                  PrimaryText(
+                    text: "Baca, dan jadi #SiPalingPaham cara menjaga bumi!",
+                    fontSize: 12,
+                    lineHeight: 1.4,
+                    letterSpacing: -0.1,
+                    color: neutralTertiary,
+                  ),
+                  const SizedBox(height: 16),
+                  GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: articleDummyTitle.length,
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisExtent: 240,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 14,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        return ArticleItem(
+                            title: articleDummyTitle[index],
+                            desc: articleDummyDesc[index],
+                            img: articleDummyImage[index]);
+                      })
+                ],
+              ),
             ),
           ),
         ),
