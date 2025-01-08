@@ -62,12 +62,15 @@ dependencies:
   fpdart: ^1.1.1
   shimmer: ^3.0.0
   dash_chat_2: ^0.0.21
-  image_picker: ^1.1.2
+  image_picker: ^0.8.9
   intl: ^0.19.0
 
   # AI Chatbot
   flutter_gemini: ^3.0.0
   flutter_osm_plugin: ^0.70.4
+
+  # TensorFlow
+  flutter_tflite: ^1.0.1
 
 dev_dependencies:
   flutter_test:
