@@ -26,7 +26,7 @@ class PilahPage extends StatefulWidget {
 class _PilahPageState extends State<PilahPage> {
   File? filePath;
 
-Future<void> pickImage(ImageSource source) async {
+  Future<void> pickImage(ImageSource source) async {
   try {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: source);
@@ -38,7 +38,6 @@ Future<void> pickImage(ImageSource source) async {
 
     var imageFile = File(image.path);
 
-    // Ensure the file exists before proceeding
     if (!await imageFile.exists()) {
       print("File does not exist.");
       return;

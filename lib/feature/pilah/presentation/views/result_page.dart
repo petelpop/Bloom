@@ -7,17 +7,66 @@ import 'package:bloom/utils/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends StatefulWidget {
   static const String routeName = "result-page";
 
   PilahModel? pilah;
   ResultPage({super.key, required this.pilah});
 
   @override
+  State<ResultPage> createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
+  String? typeText;
+  String? descText;
+  Color? typeColor;
+  Color? strokeColor;
+  Color? containerColor;
+  Color? sampahColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.pilah?.label == "Organik") {
+      typeText = "Organik";
+      descText = "Sampah yang berasal dari bahan alami atau makhluk hidup, seperti sisa makanan, daun kering, kulit buah, dan limbah dapur. Sampah organik dapat terurai secara alami (biodegradable) dan biasanya digunakan untuk membuat kompos.";
+      typeColor = primaryColor600;
+      sampahColor = Color(0xFF008F66).withOpacity(0.5);
+      containerColor = primaryColor50;
+      strokeColor = primaryColor100;
+    } else if (widget.pilah?.label == "Anorganik") {
+      typeText = "Anorganik";
+      descText = "Sampah yang berasal dari bahan non-alami atau sulit terurai, seperti plastik, kaca, logam, kertas, dan kaleng. Sampah ini sering kali dapat didaur ulang menjadi produk baru melalui proses daur ulang.";
+      typeColor = moderatColor600;
+      sampahColor = Color(0xFFD19F00).withOpacity(0.5);
+      containerColor = moderatColor50;
+      strokeColor = moderatColor100; 
+    } else if (widget.pilah?.label == "B3") {
+      typeText = "B3";
+      descText = "Sampah yang mengandung bahan berbahaya atau beracun yang dapat merusak lingkungan dan membahayakan kesehatan manusia, seperti baterai bekas, pestisida, limbah medis, oli, dan bahan kimia lainnya. Sampah ini memerlukan penanganan khusus.";
+      typeColor = tidakSehatBColor600;
+      sampahColor = Color(0xFFE02141).withOpacity(0.5);
+      containerColor = tidakSehatBColor50;
+      strokeColor = tidakSehatBColor100; 
+    } else {
+      typeText = "Undefined";
+      descText = "Tidak ada";
+      typeColor = tidakSehatBColor600;
+      sampahColor = Color(0xFFE02141).withOpacity(0.5);
+      containerColor = tidakSehatBColor50;
+      strokeColor = tidakSehatBColor100; 
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
 
-    LoggerService.info("this is label ${pilah?.label} ${pilah?.image}");
+    LoggerService.info("this is label ${widget.pilah?.label} ${widget.pilah?.image}");
     return Scaffold(
+      backgroundColor: Color(0xFFFDFDFD),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Padding(
@@ -64,8 +113,8 @@ class ResultPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: pilah?.image != null ? 
-                            FileImage(pilah!.image!) : AssetImage(Constants.imgPlaceHolder)
+                            image: widget.pilah?.image != null ? 
+                            FileImage(widget.pilah!.image!) : AssetImage(Constants.imgPlaceHolder)
                             )),
                   ),
                 ),
@@ -75,9 +124,9 @@ class ResultPage extends StatelessWidget {
                     height: 120,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: tidakSehatBColor50,
+                        color: containerColor,
                         border:
-                            Border.all(color: tidakSehatBColor100, width: 1)),
+                            Border.all(color: strokeColor!, width: 1)),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Column(
@@ -86,19 +135,19 @@ class ResultPage extends StatelessWidget {
                         children: [
                           PrimaryText(
                             text: "Sampah",
-                            color: Color(0xFFE02141).withOpacity(0.5),
+                            color: sampahColor,
                             fontWeight: 600,
                             fontSize: 16,
                             letterSpacing: -0.2,
                             lineHeight: 1.4,
                           ),
                           PrimaryText(
-                            text: "B3",
+                            text: typeText,
                             fontWeight: 900,
                             fontSize: 28,
                             letterSpacing: -0.2,
                             lineHeight: 1.2,
-                            color: tidakSehatBColor600,
+                            color: typeColor,
                           )
                         ],
                       ),
@@ -118,7 +167,7 @@ class ResultPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             PrimaryText(
-                text:"Sampah yang mengandung bahan berbahaya atau beracun yang dapat merusak lingkungan dan membahayakan kesehatan manusia, seperti baterai bekas, pestisida, limbah medis, oli, dan bahan kimia lainnya. Sampah ini memerlukan penanganan khusus.",
+                text:descText,
                 fontSize: 14,
                 letterSpacing: -0.2,
                 lineHeight: 1.4,
