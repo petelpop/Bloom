@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
+import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
@@ -40,6 +43,33 @@ class _ChatbotPageState extends State<ChatbotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFDFDFD),
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+          side: BorderSide(
+            strokeAlign: 2,
+            color: Color(0xFFF2F5F8),
+            style: BorderStyle.solid
+          )
+        ),
+        title: Row(
+          children: [
+            Image.asset(
+              Constants.icFloraProfile,
+              width: 30,
+            ),
+            SizedBox(width: 12),
+            PrimaryText(
+              text: "Flora",
+              fontSize: 18,
+              fontWeight: 700,
+              letterSpacing: -0.2,
+              lineHeight: 1.4,
+              color: neutralDefault,)
+          ],
+        ),
+      ),
       body: DashChat(
           currentUser: currentUser, 
           onSend: _sendMessage, 
