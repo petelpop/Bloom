@@ -5,6 +5,7 @@ import 'package:bloom/common/shimmer_card.dart';
 import 'package:bloom/feature/article/data/article_dummy.dart';
 import 'package:bloom/feature/article/presentation/methods/article_item.dart';
 import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
+import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_widget.dart';
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.pushNamed(ChatbotPage.routeName);
+                        context.pushNamed(FloraPage.routeName);
                       },
                       child: ShortcutWidget(
                           icon: Constants.icBox,

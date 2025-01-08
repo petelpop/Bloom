@@ -21,4 +21,5 @@ class Constants {
   static const String onBoardingFirst = "$imagePath/onboarding_first.png";
   static const String onBoardingSecond = "$imagePath/onboarding_second.png";
   static const String onBoardingThird = "$imagePath/onboarding_third.png";
+  static const String imgSparklesBg = "$imagePath/img_sparkles_bg.png";
 }

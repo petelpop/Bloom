@@ -12,6 +12,8 @@ class PrimaryButton extends StatelessWidget {
   final double fontSize;
   final double fontWeight;
   final double borderRadius;
+  final double lineHeight;
+  final double letterSpacing;
 
   const PrimaryButton({
     super.key, 
@@ -23,7 +25,10 @@ class PrimaryButton extends StatelessWidget {
     this.fontWeight = 400,
     this.width = 100,
     this.height = 50,
-    this.borderRadius = 16});
+    this.borderRadius = 16,
+    this.letterSpacing = 0,
+    this.lineHeight = 0
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +49,8 @@ class PrimaryButton extends StatelessWidget {
           fontSize: fontSize,
           color: textColor,
           fontWeight: fontWeight,
+          lineHeight: lineHeight,
+          letterSpacing: letterSpacing,
           ),
       ),
     );
