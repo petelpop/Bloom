@@ -1,6 +1,7 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/feature/flora/data/gemini_model.dart';
 import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
@@ -33,9 +34,25 @@ class _ChatbotPageState extends State<ChatbotPage> {
     messages = [
       ChatMessage(
           user: geminiUser,
-          text: "Hello, how are you?",
+          text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
           createdAt: DateTime.now()),
     ];
+
+      gemini.prompt(
+        generationConfig: GenerationConfig(
+          temperature: 1,
+          maxOutputTokens: 8192,
+          topK: 40,
+          topP: 0.95,
+        ),
+        model: geminiModelString,
+      parts: [
+      Part.text(geminiModelString),
+      ]).then((value) {
+        setState(() {
+          LoggerService.info("Ini info value $value");
+        });
+      });
   }
 
   @override
