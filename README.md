@@ -1,16 +1,22 @@
-# bloom
+# 🌿 Bloom
 
 A new Flutter project.
 
-## Getting Started
+## How to run Bloom
 
-This project is a starting point for a Flutter application.
+### Git Clone
+```
+git clone https://github.com/petelpop/Bloom.git
+```
 
-A few resources to get you started if this is your first Flutter project:
+### Get All Package
+```
+flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Create .env file
+```
+AQICN_TOKEN=[Your AQICN Token from https://aqicn.org/data-platform/token/]
+GEMINI_TOKEN=[Your Gemini API Key from https://ai.google.dev/gemini-api/]
+AQICN_BASEURL=https://api.waqi.info
+```
