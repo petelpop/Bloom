@@ -2,6 +2,8 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
+import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
 import 'package:bloom/feature/terra/data/article_dummy.dart';
 import 'package:bloom/feature/terra/presentation/methods/article_item.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
@@ -117,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       InkWell(
                         onTap: () {
-
+                          context.pushNamed(PilahPage.routeName);
                         },
                         child: ShortcutWidget(
                             icon: Constants.icBox,
@@ -135,55 +137,60 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 14, bottom: 24),
-                    constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: whiteColor,
-                      border: Border.all(color: surface300, width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                            color: blackColor.withOpacity(0.04), blurRadius: 20),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: surface200),
-                            child: Padding(
-                              padding: const EdgeInsets.all(3.5),
-                              child: Image.asset(Constants.icTrash),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              PrimaryText(
-                                text: "Males Cari Tempat Sampah ?",
-                                fontWeight: 700,
-                                lineHeight: 1.4,
-                                letterSpacing: -0.1,
-                                color: neutralDefault,
-                              ),
-                              PrimaryText(
-                                text: "Klik dan temukan tempat sampah terdekat!",
-                                fontSize: 12,
-                                letterSpacing: -0.1,
-                                lineHeight: 1.4,
-                                color: neutralTertiary,
-                              )
-                            ],
-                          )
+                  InkWell(
+                    onTap: () {
+                      context.pushNamed(LokaPage.routeName);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 14, bottom: 24),
+                      constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: whiteColor,
+                        border: Border.all(color: surface300, width: 1),
+                        boxShadow: [
+                          BoxShadow(
+                              color: blackColor.withOpacity(0.04), blurRadius: 20),
                         ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: surface200),
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.5),
+                                child: Image.asset(Constants.icTrash),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                PrimaryText(
+                                  text: "Males Cari Tempat Sampah ?",
+                                  fontWeight: 700,
+                                  lineHeight: 1.4,
+                                  letterSpacing: -0.1,
+                                  color: neutralDefault,
+                                ),
+                                PrimaryText(
+                                  text: "Klik dan temukan tempat sampah terdekat!",
+                                  fontSize: 12,
+                                  letterSpacing: -0.1,
+                                  lineHeight: 1.4,
+                                  color: neutralTertiary,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

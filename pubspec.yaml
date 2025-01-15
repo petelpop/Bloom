@@ -67,6 +67,8 @@ dependencies:
 
   # AI Chatbot
   flutter_gemini: ^3.0.0
+
+  # OpenStreetMap
   flutter_osm_plugin: ^0.70.4
 
   # TensorFlow
