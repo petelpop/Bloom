@@ -1,6 +1,7 @@
 # 🌿 Bloom
 
-A new Flutter project.
+Bloom adalah aplikasi ramah lingkungan yang mengintegrasikan teknologi modern untuk mendukung keberlanjutan. Aplikasi ini membantu pengguna mengelola sampah, memantau kualitas udara, dan mendapatkan edukasi lingkungan. Aplikasi ini juga mendorong pengguna untuk mengambil langkah kecil yang nantinya akan berdampak besar pada masa depan bumi 🌍🌿. 
+
 
 ## How to run Bloom
 
@@ -14,7 +15,7 @@ git clone https://github.com/petelpop/Bloom.git
 flutter pub get
 ```
 
-### Create `.env` file
+### Create `.env` file and fill the file with code below
 ```
 AQICN_TOKEN=[Your AQICN Token from https://aqicn.org/data-platform/token/]
 GEMINI_TOKEN=[Your Gemini API Key from https://ai.google.dev/gemini-api/]
