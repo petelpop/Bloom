@@ -38,7 +38,7 @@ class StatusWidget extends StatelessWidget {
     colorDesc = moderatColor50;
     aqiStatus = "Moderat";
     aqiIcon = Constants.icMask;
-    aqiDesc = "Gunakan masker jika beraktivitas diluar ringan.";
+    aqiDesc = "Gunakan masker jika beraktivitas diluar ruangan.";
   } else if (aqiParse < 150) {
     colorAqi = tidakSehatColor600;
     borderDesc = tidakSehatColor100;

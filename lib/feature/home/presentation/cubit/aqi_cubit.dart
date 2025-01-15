@@ -62,7 +62,7 @@ class AqiCubit extends Cubit<AqiState> {
   Position position = await Geolocator.getCurrentPosition(
     desiredAccuracy: LocationAccuracy.high
   );
-  emit(AqiLoadedLocation(lat: position.latitude.toString(), lng: position.latitude.toString()));
+  emit(AqiLoadedLocation(lat: position.latitude.toString(), lng: position.longitude.toString()));
   } catch (e) {
   emit(AqiLocationFailed(message: "error: $e")); 
   }
