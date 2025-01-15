@@ -1,27 +1,31 @@
 # 🌿 Bloom
 
-Bloom adalah aplikasi ramah lingkungan yang mengintegrasikan teknologi modern untuk mendukung keberlanjutan. Aplikasi ini membantu pengguna mengelola sampah, memantau kualitas udara, dan mendapatkan edukasi lingkungan. Aplikasi ini juga mendorong pengguna untuk mengambil langkah kecil yang nantinya akan berdampak besar pada masa depan bumi 🌍🌿. 
+Bloom is an eco-friendly application that integrates modern technology to support sustainability. This app helps users manage waste, monitor air quality, and gain environmental education. It also encourages users to take small steps that can eventually have a significant impact on the future of our planet 🌍🌿.
 
 
-## How to run Bloom
+## ⚡ How to run Bloom
 
-### Git Clone
+### 1. Clone the repository
+Use the following command to clone the repository to your local machine:
 ```
 git clone https://github.com/petelpop/Bloom.git
 ```
 
-### Get All Package
+### 2. Retrieve all packages
+Run the command below to fetch and install all dependencies specified in the pubspec.yaml file:
 ```
 flutter pub get
 ```
 
-### Create `.env` file and fill the file with code below
+### 3. Create `.env` file
+Create a .env file in the root directory of the project and add the following keys:
 ```
 AQICN_TOKEN=[Your AQICN Token from https://aqicn.org/data-platform/token/]
 GEMINI_TOKEN=[Your Gemini API Key from https://ai.google.dev/gemini-api/]
 AQICN_BASEURL=https://api.waqi.info
 ```
-### run flutter application
+### 4. Run flutter application
+Use the command below to start the application:
 ```
 flutter run
 ```
