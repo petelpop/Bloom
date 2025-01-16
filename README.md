@@ -29,3 +29,6 @@ Use the command below to start the application:
 ```
 flutter run
 ```
+
+## 💻 Technology
+[![Technology](https://skillicons.dev/icons?i=gemini,flutter,vscode)](https://skillicons.dev)
