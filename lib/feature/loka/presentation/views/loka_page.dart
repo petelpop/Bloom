@@ -1,5 +1,6 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
+import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
 import 'package:bloom/utils/logger_service.dart';
@@ -44,9 +45,9 @@ class _LokaPageState extends State<LokaPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              height: 187,
+              height: 190,
               width: double.infinity,
-              margin: EdgeInsets.only(bottom: 116),
+              margin: EdgeInsets.only(top: 560),
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.circular(20)
@@ -70,7 +71,43 @@ class _LokaPageState extends State<LokaPage> {
                           lineHeight: 1.4,
                           fontWeight: 500,)
                       ],
-                    )
+                    ),
+
+                    SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        PrimaryText(
+                          text: "1.210m",
+                          lineHeight: 1.4,
+                          letterSpacing: -0.2,
+                          fontSize: 28,
+                          fontWeight: 900,
+                          color: neutralDefault,),
+                          SizedBox(width: 8,),
+                          PrimaryText(
+                            text: "Dari Kamu",
+                            lineHeight: 1.4,
+                            letterSpacing: -0.2,
+                            color: neutralTertiary,)
+                      ],
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(
+                        color: surface300,
+                        height: 1,
+                      ),
+                    ),
+                    PrimaryButton(
+                      width: double.infinity,
+                      text: "Lihat di GMaps", 
+                      height: 40,
+                      function: (){
+
+                      },
+                      )
                   ],
                 ),),
             ),
