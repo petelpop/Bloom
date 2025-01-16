@@ -20,8 +20,8 @@ flutter pub get
 ### 3. Create `.env` file
 Create a .env file in the root directory of the project and add the following keys:
 ```
-AQICN_TOKEN=[Your AQICN Token from https://aqicn.org/data-platform/token/]
-GEMINI_TOKEN=[Your Gemini API Key from https://ai.google.dev/gemini-api/]
+AQICN_TOKEN=Your AQICN Token from https://aqicn.org/data-platform/token/
+GEMINI_TOKEN=Your Gemini API Key from https://ai.google.dev/gemini-api/
 AQICN_BASEURL=https://api.waqi.info
 ```
 ### 4. Run flutter application
