@@ -31,4 +31,4 @@ flutter run
 ```
 
 ## 💻 Technology
-[![Technology](https://skillicons.dev/icons?i=gemini,flutter,vscode)](https://skillicons.dev)
+[![Technology](https://skillicons.dev/icons?i=github,flutter,vscode)](https://skillicons.dev)
