@@ -3,6 +3,7 @@ import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/feature/loka/presentation/methods/trash_list.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -24,6 +25,21 @@ class _LokaPageState extends State<LokaPage> {
     ),
   );
 
+  Future<void> addMarker() async {
+    for (GeoPoint location in markerLocations) {
+      await controller.addMarker(
+        location,
+        markerIcon: MarkerIcon(
+          iconWidget: Image.asset(
+            Constants.icLocationOsm,
+            width: 48,
+            height: 48,
+          ),
+        )
+      );
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,14 +54,21 @@ class _LokaPageState extends State<LokaPage> {
           OSMFlutter(
             controller: controller, 
           osmOption: OSMOption(
+            markerOption: MarkerOption(),
             zoomOption: ZoomOption(
               initZoom: 15
             )
-          )),
+          ),
+          onMapIsReady: (_) {
+            LoggerService.error("on map is ready ? $_");
+            if (_) {
+            addMarker();              
+            }
+          },),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              height: 190,
+              height: 200,
               width: double.infinity,
               margin: EdgeInsets.only(top: 560),
               decoration: BoxDecoration(

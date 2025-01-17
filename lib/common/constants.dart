@@ -30,6 +30,8 @@ class Constants {
   static const String icPilahText = "$iconsPath/ic_pilah_text.png";
   static const String icX = "$iconsPath/ic_x.png";
   static const String icTrashGray = "$iconsPath/ic_trash_gray.png";
+  static const String icLocationOsmSelected = "$iconsPath/ic_location_osm_selected.png";
+  static const String icLocationOsm = "$iconsPath/ic_location_osm.png";
 
   static const String imagePath = "assets/image";
   static const String imgPlaceHolder = "$imagePath/img_placeholder.png";
