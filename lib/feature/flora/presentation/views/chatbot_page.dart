@@ -26,7 +26,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
   ChatUser geminiUser = ChatUser(
       id: "1", firstName: "Flora", profileImage: Constants.icFloraProfile);
 
-
   @override
   void initState() {
     // TODO: implement initState
