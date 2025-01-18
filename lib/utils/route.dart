@@ -8,6 +8,8 @@ import 'package:bloom/feature/pilah/data/model/pilah.dart';
 import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
 import 'package:bloom/feature/pilah/presentation/views/result_page.dart';
 import 'package:bloom/feature/splash/presentation/views/splash_page.dart';
+import 'package:bloom/feature/terra/data/model/article.dart';
+import 'package:bloom/feature/terra/presentation/views/article_detail_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoute {
@@ -27,25 +29,34 @@ class AppRoute {
           return OnboardingPage();
         }),
     GoRoute(
-      path: '/${MainPage.routeName}',
-      name: MainPage.routeName,
-      builder: (context, state) {
-        return const MainPage();
-    },
-      routes: [
-        GoRoute(
-          path: LokaPage.routeName,
-          name: LokaPage.routeName,
-          builder: (context, state) {
-            return LokaPage();
-          },),
-            GoRoute(
-        path: HomePage.routeName,
-        name: HomePage.routeName,
+        path: '/${MainPage.routeName}',
+        name: MainPage.routeName,
         builder: (context, state) {
-          return HomePage();
-        },),
-                  GoRoute(
+          return const MainPage();
+        },
+        routes: [
+          GoRoute(
+            path: ArticleDetailPage.routeName,
+            name: ArticleDetailPage.routeName,
+            builder: (context, state) {
+              return ArticleDetailPage(data: state.extra as ArticleModel);
+            },
+          ),
+          GoRoute(
+            path: LokaPage.routeName,
+            name: LokaPage.routeName,
+            builder: (context, state) {
+              return LokaPage();
+            },
+          ),
+          GoRoute(
+            path: HomePage.routeName,
+            name: HomePage.routeName,
+            builder: (context, state) {
+              return HomePage();
+            },
+          ),
+          GoRoute(
               path: PilahPage.routeName,
               name: PilahPage.routeName,
               builder: (context, state) {
@@ -77,7 +88,6 @@ class AppRoute {
                   },
                 ),
               ])
-      ]
-    ),
+        ]),
   ]);
 }

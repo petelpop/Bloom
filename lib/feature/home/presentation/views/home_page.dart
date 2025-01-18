@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFFDFDFD),
       body: RefreshIndicator(
         onRefresh: () async {
-              context.read<AqiCubit>().getLocation();
+          context.read<AqiCubit>().getLocation();
         },
         color: primaryColor600,
         child: SafeArea(
@@ -67,43 +67,40 @@ class _HomePageState extends State<HomePage> {
                     letterSpacing: -0.1,
                   ),
                   const SizedBox(height: 22),
-                  BlocConsumer<AqiCubit, AqiState>(
-                    listener: (context, state) {
-                      if (state is AqiLoadedLocation) {
-                        context.read<AqiCubit>().getAqiData(state.lat, state.lng);
-                      }
-                    },
-                    builder: (context, state) {
-                      LoggerService.error("ini state sekarang $state");
-                      if (state is AqiLoading) {
-                        return const ShimmerCard(
-                          height: 180,
-                          width: double.infinity,
-                          radius: 16,
-                          );
-                      }
-                      if (state is AqiLoaded) {
-                        LoggerService.info("ini city dari aqi ${state.data?.city?.name}");
-                        return StatusWidget(
-                          city: state.data?.city?.name?.split(" ")[0],
-                          aqi: state.data?.aqi.toString(),
-                        );
-                      }
-                      if (state is AqiFailed) {
+                  BlocConsumer<AqiCubit, AqiState>(listener: (context, state) {
+                    if (state is AqiLoadedLocation) {
+                      context.read<AqiCubit>().getAqiData(state.lat, state.lng);
+                    }
+                  }, builder: (context, state) {
+                    LoggerService.error("ini state sekarang $state");
+                    if (state is AqiLoading) {
+                      return const ShimmerCard(
+                        height: 180,
+                        width: double.infinity,
+                        radius: 16,
+                      );
+                    }
+                    if (state is AqiLoaded) {
+                      LoggerService.info(
+                          "ini city dari aqi ${state.data?.city?.name}");
+                      return StatusWidget(
+                        city: state.data?.city?.name?.split(" ")[0],
+                        aqi: state.data?.aqi.toString(),
+                      );
+                    }
+                    if (state is AqiFailed) {
                       return InkWell(
-                        onTap: () {
-                          context.read<AqiCubit>().getLocation();
-                        },
-                        child: StatusFailedWidget()
-                        );
-                      }
-                        return const ShimmerCard(
-                          height: 180,
-                          width: double.infinity,
-                          radius: 16,
-                          );
-                        }
-                  ),
+                          onTap: () {
+                            context.read<AqiCubit>().getLocation();
+                          },
+                          child: StatusFailedWidget());
+                    }
+                    return const ShimmerCard(
+                      height: 180,
+                      width: double.infinity,
+                      radius: 16,
+                    );
+                  }),
                   const SizedBox(height: 22),
                   PrimaryText(
                     text: "SHORTCUT",
@@ -143,7 +140,8 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       margin: const EdgeInsets.only(top: 14, bottom: 24),
-                      constraints: const BoxConstraints(minHeight: 69, maxHeight: 71),
+                      constraints:
+                          const BoxConstraints(minHeight: 69, maxHeight: 71),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
@@ -151,7 +149,8 @@ class _HomePageState extends State<HomePage> {
                         border: Border.all(color: surface300, width: 1),
                         boxShadow: [
                           BoxShadow(
-                              color: blackColor.withOpacity(0.04), blurRadius: 20),
+                              color: blackColor.withOpacity(0.04),
+                              blurRadius: 20),
                         ],
                       ),
                       child: Padding(
@@ -181,7 +180,8 @@ class _HomePageState extends State<HomePage> {
                                   color: neutralDefault,
                                 ),
                                 PrimaryText(
-                                  text: "Klik dan temukan tempat sampah terdekat!",
+                                  text:
+                                      "Klik dan temukan tempat sampah terdekat!",
                                   fontSize: 12,
                                   letterSpacing: -0.1,
                                   lineHeight: 1.4,
@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                             title: articleDummyTitle[index],
                             desc: articleDummyDesc[index],
                             img: articleDummyImage[index]);
-                      })
+                      }),
                 ],
               ),
             ),

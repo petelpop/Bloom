@@ -41,14 +41,24 @@ class ArticleItem extends StatelessWidget {
             width: double.infinity,
             height: 116,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12), 
+                topRight: Radius.circular(12)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    img,
+                  ),
+                  onError: (error, stackTrace) {
+                Image.asset(Constants.imgPlaceHolder, fit:BoxFit.cover);
+              },)
             ),
-            child: Image.network(
-              img, 
-              fit: BoxFit.cover,
-              errorBuilder:(context, error, stackTrace) {
-                return Image.asset(Constants.imgPlaceHolder, fit:BoxFit.cover);
-              },),
+            // child: Image.network(
+            //   img, 
+            //   fit: BoxFit.cover,
+            //   errorBuilder:(context, error, stackTrace) {
+            //     return Image.asset(Constants.imgPlaceHolder, fit:BoxFit.cover);
+            //   },),
           ),
 
           Padding(
