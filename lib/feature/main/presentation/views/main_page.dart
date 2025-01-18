@@ -7,6 +7,7 @@ import 'package:bloom/feature/main/presentation/methods/navigation_bar.dart';
 import 'package:bloom/feature/main/presentation/methods/navigation_bar_item.dart';
 import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
 import 'package:bloom/feature/terra/presentation/views/article_page.dart';
+import 'package:bloom/utils/shared_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,11 +28,16 @@ class _MainPageState extends State<MainPage> {
         ArticlePage()
       ];
 
+      void setCompleteOnBoarding() async {
+          await SharedStorage.setOnboardingComplete(true);
+      }
+
       @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<MainPageCubit>().setPage(0);
+    setCompleteOnBoarding();
   }
 
   @override
