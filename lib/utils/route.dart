@@ -2,6 +2,7 @@ import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
+import 'package:bloom/feature/loka/presentation/views/onboarding_loka_page.dart';
 import 'package:bloom/feature/main/presentation/views/main_page.dart';
 import 'package:bloom/feature/onboarding/presentation/views/onboarding_page.dart';
 import 'package:bloom/feature/pilah/data/model/pilah.dart';
@@ -42,6 +43,13 @@ class AppRoute {
               return ArticleDetailPage(data: state.extra as ArticleModel);
             },
           ),
+          GoRoute(
+            path: OnboardingLokaPage.routeName,
+            name: OnboardingLokaPage.routeName,
+            builder: (context, state) {
+              return OnboardingLokaPage();
+            },
+        ),
           GoRoute(
             path: LokaPage.routeName,
             name: LokaPage.routeName,

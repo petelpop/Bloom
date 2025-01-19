@@ -1,18 +1,20 @@
+import 'package:dash_chat_2/dash_chat_2.dart';
+
 class ChatModel {
   final String text;
-  final String userId;
+  final ChatUser user;
   final DateTime createdAt;
 
   ChatModel({
     required this.text,
-    required this.userId,
+    required this.user,
     required this.createdAt,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'text': text,
-      'userId': userId,
+      'user': user,
       'createdAt': createdAt.toIso8601String(), 
     };
   }
@@ -20,7 +22,7 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) {
     return ChatModel(
       text: json['text'],
-      userId: json['userId'],
+      user: json['user'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }

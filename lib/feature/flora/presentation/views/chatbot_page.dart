@@ -2,8 +2,10 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/flora/data/gemini_model.dart';
+import 'package:bloom/feature/flora/data/model/chat_model.dart';
 import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
+import 'package:bloom/utils/secure_storage.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -30,14 +32,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    messages = [
-      ChatMessage(
-          user: geminiUser,
-          text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
-          createdAt: DateTime.now()),
-    ];
-
-      gemini.prompt(
+    loadStorage();
+    gemini.prompt(
         generationConfig: GenerationConfig(
           temperature: 1,
           maxOutputTokens: 8192,
@@ -45,13 +41,32 @@ class _ChatbotPageState extends State<ChatbotPage> {
           topP: 0.95,
         ),
         model: geminiModelString,
-      parts: [
-      Part.text(geminiModelString),
-      ]).then((value) {
-        setState(() {
-          LoggerService.info("Ini info value $value");
-        });
+        parts: [
+          Part.text(geminiModelString),
+        ]).then((value) {
+      setState(() {
+        LoggerService.info("Ini info value $value");
       });
+    });
+  }
+
+  void loadStorage() async {
+    List<ChatModel> loadedMessages = await SecureStorageBloom().loadMessages();
+    setState(() {
+      LoggerService.info("ini isi loaed message $loadedMessages");
+      messages = loadedMessages.isNotEmpty
+          ? loadedMessages.map((data) {
+              LoggerService.error("isi text ${data.text}");
+              return ChatMessage(
+                  user: data.user, text: data.text, createdAt: data.createdAt);
+            }).toList()
+          : [
+              ChatMessage(
+                  user: geminiUser,
+                  text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
+                  createdAt: DateTime.now()),
+            ];
+    });
   }
 
   @override
@@ -92,49 +107,53 @@ class _ChatbotPageState extends State<ChatbotPage> {
         messages: messages,
         readOnly: false,
         inputOptions: InputOptions(
-          textController: _textEditingController,
-          onTextChange: (value) {
-            setState(() {
-              textValue = value;
-            });
-          },
-          sendButtonBuilder: (send) {
-            if (textValue?.isEmpty == true || textValue == null) {
-              return Container(
-                margin: const EdgeInsets.only(left: 12),
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: neutralGray,
-                  borderRadius: BorderRadius.circular(14)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(Constants.icUnavailableSend, width: 0.15,),
-                ),
-              );
-            } else {
-              return Container(
-                margin: const EdgeInsets.only(left: 12),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(14),
-                  onTap: send,
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: primaryColor600,
-                      borderRadius: BorderRadius.circular(14)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(Constants.icAvailableSend, width: 0.15,),
+            textController: _textEditingController,
+            onTextChange: (value) {
+              setState(() {
+                textValue = value;
+              });
+            },
+            sendButtonBuilder: (send) {
+              if (textValue?.isEmpty == true || textValue == null) {
+                return Container(
+                  margin: const EdgeInsets.only(left: 12),
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                      color: neutralGray,
+                      borderRadius: BorderRadius.circular(14)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      Constants.icUnavailableSend,
+                      width: 0.15,
                     ),
                   ),
-                ),
-              );
-            }
-          },
+                );
+              } else {
+                return Container(
+                  margin: const EdgeInsets.only(left: 12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(14),
+                    onTap: send,
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                          color: primaryColor600,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          Constants.icAvailableSend,
+                          width: 0.15,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
             alwaysShowSend: true,
             textInputAction: TextInputAction.send,
             inputTextStyle: const TextStyle(
@@ -172,11 +191,11 @@ class _ChatbotPageState extends State<ChatbotPage> {
                 fontSize: 10,
                 lineHeight: 1.4,
                 letterSpacing: -0.1,
-                color: currentUser == true ? neutralTertiary : const Color(0xFF979AA2),
-                );
-
-            } 
-            ),
+                color: currentUser == true
+                    ? neutralTertiary
+                    : const Color(0xFF979AA2),
+              );
+            }),
       ),
     );
   }
@@ -184,6 +203,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void _sendMessage(ChatMessage chatMessage) {
     setState(() {
       messages = [chatMessage, ...messages];
+      SecureStorageBloom().saveMessages(messages.map((message) {
+        return ChatModel(
+          user: message.user,
+          text: message.text,
+          createdAt: message.createdAt,
+        );
+      }).toList());
     });
     try {
       String question = chatMessage.text;
@@ -198,6 +224,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
           lastMessage.text += response;
           setState(() {
             messages = [lastMessage!, ...messages];
+            SecureStorageBloom().saveMessages(messages.map((message) {
+              return ChatModel(
+                user: message.user,
+                text: message.text,
+                createdAt: message.createdAt,
+              );
+            }).toList());
           });
         } else {
           String response = event.content?.parts?.whereType<TextPart>().fold(
@@ -207,6 +240,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
               user: geminiUser, createdAt: DateTime.now(), text: response);
           setState(() {
             messages = [message, ...messages];
+            SecureStorageBloom().saveMessages(messages.map((message) {
+              return ChatModel(
+                user: message.user,
+                text: message.text,
+                createdAt: message.createdAt,
+              );
+            }).toList());
           });
         }
       });

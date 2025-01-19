@@ -2,9 +2,11 @@ import 'package:bloom/common/constants.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
+import 'package:bloom/feature/loka/presentation/views/onboarding_loka_page.dart';
 import 'package:bloom/feature/main/cubit/main_page_cubit.dart';
 import 'package:bloom/feature/main/presentation/methods/navigation_bar.dart';
 import 'package:bloom/feature/main/presentation/methods/navigation_bar_item.dart';
+import 'package:bloom/feature/onboarding/presentation/methods/onboarding_dots.dart';
 import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
 import 'package:bloom/feature/terra/presentation/views/article_page.dart';
 import 'package:bloom/utils/shared_storage.dart';
@@ -23,7 +25,7 @@ class _MainPageState extends State<MainPage> {
   List<Widget> listPage(int page) => [
         HomePage(),
         PilahPage(),
-        LokaPage(),
+        OnboardingLokaPage(),
         FloraPage(),
         ArticlePage()
       ];
