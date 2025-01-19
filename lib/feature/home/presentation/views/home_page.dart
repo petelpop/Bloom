@@ -67,11 +67,13 @@ class _HomePageState extends State<HomePage> {
                     letterSpacing: -0.1,
                   ),
                   const SizedBox(height: 22),
-                  BlocConsumer<AqiCubit, AqiState>(listener: (context, state) {
+                  BlocConsumer<AqiCubit, AqiState>(
+                    listener: (context, state) {
                     if (state is AqiLoadedLocation) {
                       context.read<AqiCubit>().getAqiData(state.lat, state.lng);
                     }
-                  }, builder: (context, state) {
+                  }, 
+                  builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");
                     if (state is AqiLoading) {
                       return const ShimmerCard(

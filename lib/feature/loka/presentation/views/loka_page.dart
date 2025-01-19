@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:logger/logger.dart';
+import 'package:sizer/sizer.dart';
 
 class LokaPage extends StatefulWidget {
   static const String routeName = "loka-page";
@@ -105,7 +106,7 @@ class _LokaPageState extends State<LokaPage> {
               child: Container(
                 height: 200,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 560),
+                margin: EdgeInsets.only(top: 75.h),
                 decoration: BoxDecoration(
                     color: whiteColor, borderRadius: BorderRadius.circular(20)),
                 child: Padding(

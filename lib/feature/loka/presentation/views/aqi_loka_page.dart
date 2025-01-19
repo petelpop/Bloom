@@ -1,6 +1,9 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
+import 'package:bloom/feature/home/presentation/methods/status_failed_widget.dart';
+import 'package:bloom/feature/home/presentation/methods/status_widget.dart';
 import 'package:bloom/feature/loka/data/model/loka_aqi.dart';
 import 'package:bloom/feature/loka/presentation/cubit/aqi/aqi_cubit.dart';
 import 'package:bloom/feature/loka/presentation/methods/aqi_loka_widget.dart';
@@ -9,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:logger/logger.dart';
+import 'package:sizer/sizer.dart';
 
 class AqiLokaPage extends StatefulWidget {
   static const String routeName = "aqi-loka-page";
@@ -95,6 +99,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
         listener: (context, state) {
           LoggerService.info("ini state dari aqi loka page $state");
           if (state is LokaAqiLoadedLocation) {
+            context.read<AqiCubit>().getAqiData(state.realLat, state.realLng);
             context.read<AqiLokaCubit>().getAqiMapsData(state.lat, state.lng,
                 state.lat2, state.lng2, state.realLat, state.realLng);
             LoggerService.info(
@@ -103,33 +108,73 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
         },
         builder: (context, state) {
           if (state is LokaAqiLoaded) {
-            return OSMFlutter(
-                controller: controller,
-                onMapIsReady: (isReady) async {
-                  if (isReady) {
-                    await controller.changeLocation(
-                      GeoPoint(
-                        latitude: double.parse(state.lat!),
-                        longitude: double.parse(state.lng!),
-                      ),
-                    );
-
-                    addMarkerLocation(state.data);
-                  }
-                },
-                osmOption: OSMOption(
-                    userLocationMarker: UserLocationMaker(
-                        personMarker: MarkerIcon(
-                          icon: Icon(
-                            Icons.location_history,
-                            size: 48,
-                            color: primaryColor600,
+            return Stack(
+              children: [
+                OSMFlutter(
+                    controller: controller,
+                    onMapIsReady: (isReady) async {
+                      if (isReady) {
+                        await controller.changeLocation(
+                          GeoPoint(
+                            latitude: double.parse(state.lat!),
+                            longitude: double.parse(state.lng!),
                           ),
-                        ),
-                        directionArrowMarker:
-                            MarkerIcon(icon: Icon(Icons.location_history))),
-                    zoomOption: ZoomOption(
-                        initZoom: 10, minZoomLevel: 5, maxZoomLevel: 19)));
+                        );
+
+                        addMarkerLocation(state.data);
+                      }
+                    },
+                    osmOption: OSMOption(
+                        userLocationMarker: UserLocationMaker(
+                            personMarker: MarkerIcon(
+                              icon: Icon(
+                                Icons.location_history,
+                                size: 48,
+                                color: primaryColor600,
+                              ),
+                            ),
+                            directionArrowMarker:
+                                MarkerIcon(icon: Icon(Icons.location_history))),
+                        zoomOption: ZoomOption(
+                            initZoom: 10, minZoomLevel: 5, maxZoomLevel: 19))),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                      margin: EdgeInsets.only(top: 75.h),
+                      child: BlocBuilder<AqiCubit, AqiState>(
+                        builder: (context, stateAqi) {
+                          if (stateAqi is AqiLoading) {
+                            return const ShimmerCard(
+                              height: 180,
+                              width: double.infinity,
+                              radius: 16,
+                            );
+                          }
+                          if (stateAqi is AqiLoaded) {
+                            LoggerService.info(
+                                "ini city dari aqi ${stateAqi.data?.city?.name}");
+                            return StatusWidget(
+                              city: "Daerah Kamu",
+                              aqi: stateAqi.data?.aqi.toString(),
+                            );
+                          }
+                          if (stateAqi is AqiFailed) {
+                            return InkWell(
+                                onTap: () {
+                                  context.read<AqiLokaCubit>().getLatLng();
+                                },
+                                child: StatusFailedWidget());
+                          }
+                          return const ShimmerCard(
+                            height: 180,
+                            width: double.infinity,
+                            radius: 16,
+                          );
+                        },
+                      )),
+                )
+              ],
+            );
           } else {
             return ShimmerCard(height: double.infinity);
           }
