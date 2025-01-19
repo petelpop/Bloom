@@ -41,9 +41,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
     LoggerService.info("item length ${data.length}");
     for (var item in data) {
       Color? colorAqi;
-      dynamic aqiParse = item.aqi != "-" ? 
-      double.parse(item.aqi!)
-      : "-";
+      dynamic aqiParse = item.aqi != "-" ? double.parse(item.aqi!) : "-";
       if (aqiParse == "-") {
         colorAqi = neutralAccent1;
       } else if (aqiParse < 50) {
@@ -72,7 +70,8 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
             child: Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: colorAqi),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: colorAqi),
               child: Center(
                 child: PrimaryText(
                   text: item.aqi,
@@ -116,11 +115,35 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                         longitude: double.parse(state.lng!),
                       ),
                     );
+
+                    await controller.changeLocationMarker(
+                        oldLocation: GeoPoint(
+                          latitude: double.parse(state.lat!),
+                          longitude: double.parse(state.lng!),
+                        ),
+                        newLocation: GeoPoint(
+                          latitude: double.parse(state.lat!),
+                          longitude: double.parse(state.lng!),
+                        ),
+                        markerIcon: MarkerIcon(
+                          icon: Icon(Icons.location_history,
+                              size: 48, color: primaryColor600),
+                        ));
                   }
                 },
                 osmOption: OSMOption(
+                    userLocationMarker: UserLocationMaker(
+                        personMarker: MarkerIcon(
+                          icon: Icon(
+                            Icons.location_history,
+                            size: 48,
+                            color: primaryColor600,
+                          ),
+                        ),
+                        directionArrowMarker:
+                            MarkerIcon(icon: Icon(Icons.location_history))),
                     zoomOption: ZoomOption(
-                        initZoom: 5, minZoomLevel: 5, maxZoomLevel: 19)));
+                        initZoom: 10, minZoomLevel: 5, maxZoomLevel: 19)));
           } else {
             return ShimmerCard(height: double.infinity);
           }
