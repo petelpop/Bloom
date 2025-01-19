@@ -1,5 +1,5 @@
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
-import 'package:bloom/feature/loka/presentation/cubit/loka_cubit.dart';
+import 'package:bloom/feature/loka/presentation/cubit/loka/loka_cubit.dart';
 import 'package:bloom/feature/main/cubit/main_page_cubit.dart';
 import 'package:bloom/feature/pilah/presentation/cubit/pilah_cubit.dart';
 import 'package:bloom/feature/splash/presentation/cubit/splash_cubit.dart';
