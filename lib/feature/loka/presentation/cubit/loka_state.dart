@@ -18,3 +18,26 @@ final class LokaSelected extends LokaState {
   // TODO: implement props
   List<Object> get props => [selected];
 }
+
+final class LokaLoading extends LokaState {}
+
+final class LokaFailed extends LokaState {
+  final String? message;
+
+  LokaFailed({required this.message});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [message!];
+}
+
+final class LokaLoaded extends LokaState {
+  final String? lat;
+  final String? lng;
+
+  LokaLoaded({required this.lat, required this.lng});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [lat!, lng!];
+}
