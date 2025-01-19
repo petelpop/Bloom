@@ -168,7 +168,6 @@ class _LokaPageState extends State<LokaPage> {
                         width: double.infinity,
                         text: "Lihat di GMaps",
                         height: 40,
-                        // function: () {},
                         function: () async {
                           if (nearestLocation?.latitude != null) {
                             await context.read<LokaCubit>().openMap(

@@ -62,9 +62,9 @@ class OnboardingLokaPage extends StatelessWidget {
                         context.pushNamed(AqiLokaPage.routeName);
                       },
                       child: ShortcutWidget(
-                          icon: Constants.icTrash,
-                          text: "Tempat Sampah",
-                          desc: "Dicariin yang terdekat"),
+                          icon: Constants.icWind,
+                          text: "Kualitas Udara",
+                          desc: "Di daerah kamu"),
                     ),
                   ],
                 )
