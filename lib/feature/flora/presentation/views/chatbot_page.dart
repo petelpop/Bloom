@@ -5,7 +5,6 @@ import 'package:bloom/feature/flora/data/gemini_model.dart';
 import 'package:bloom/feature/flora/data/model/chat_model.dart';
 import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
-import 'package:bloom/utils/secure_storage.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -32,7 +31,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadStorage();
+    messages = [
+      ChatMessage(
+          user: geminiUser,
+          text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
+          createdAt: DateTime.now()),
+    ];
+
     gemini.prompt(
         generationConfig: GenerationConfig(
           temperature: 1,
@@ -47,25 +52,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
       setState(() {
         LoggerService.info("Ini info value $value");
       });
-    });
-  }
-
-  void loadStorage() async {
-    List<ChatModel> loadedMessages = await SecureStorageBloom().loadMessages();
-    setState(() {
-      LoggerService.info("ini isi loaed message $loadedMessages");
-      messages = loadedMessages.isNotEmpty
-          ? loadedMessages.map((data) {
-              LoggerService.error("isi text ${data.text}");
-              return ChatMessage(
-                  user: data.user, text: data.text, createdAt: data.createdAt);
-            }).toList()
-          : [
-              ChatMessage(
-                  user: geminiUser,
-                  text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
-                  createdAt: DateTime.now()),
-            ];
     });
   }
 
@@ -203,13 +189,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void _sendMessage(ChatMessage chatMessage) {
     setState(() {
       messages = [chatMessage, ...messages];
-      SecureStorageBloom().saveMessages(messages.map((message) {
-        return ChatModel(
-          user: message.user,
-          text: message.text,
-          createdAt: message.createdAt,
-        );
-      }).toList());
     });
     try {
       String question = chatMessage.text;
@@ -224,13 +203,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
           lastMessage.text += response;
           setState(() {
             messages = [lastMessage!, ...messages];
-            SecureStorageBloom().saveMessages(messages.map((message) {
-              return ChatModel(
-                user: message.user,
-                text: message.text,
-                createdAt: message.createdAt,
-              );
-            }).toList());
           });
         } else {
           String response = event.content?.parts?.whereType<TextPart>().fold(
@@ -240,13 +212,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
               user: geminiUser, createdAt: DateTime.now(), text: response);
           setState(() {
             messages = [message, ...messages];
-            SecureStorageBloom().saveMessages(messages.map((message) {
-              return ChatModel(
-                user: message.user,
-                text: message.text,
-                createdAt: message.createdAt,
-              );
-            }).toList());
           });
         }
       });
