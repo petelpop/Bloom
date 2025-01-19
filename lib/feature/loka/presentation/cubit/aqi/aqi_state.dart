@@ -27,22 +27,27 @@ final class LokaAqiLoadedLocation extends LokaAqiState {
   final String? lng;
   final String? lat2;
   final String? lng2;
+  final String? realLat;
+  final String? realLng;
 
-  LokaAqiLoadedLocation({required this.lat, required this.lng, required this.lat2, required this.lng2});
+  LokaAqiLoadedLocation({required this.lat, required this.lng, required this.lat2, required this.lng2, required this.realLat, required this.realLng});
 
   @override
   // TODO: implement props
-  List<Object> get props => [lat!, lng!, lat2!, lng2!];
+  List<Object> get props => [lat!, lng!, lat2!, lng2!, realLat!, realLng!];
 }
 
 final class LokaAqiLoaded extends LokaAqiState {
   final List<AqiLokaDataModel>? data;
+  final String? lat;
+  final String? lng;
 
-  LokaAqiLoaded({required this.data});
+  LokaAqiLoaded({required this.data, required this.lat, required this.lng});
+
 
   @override
   // TODO: implement props
-  List<Object> get props => [data!];
+  List<Object> get props => [data!, lat!, lng!];
 }
 
 final class LokaAqiFailed extends LokaAqiState {

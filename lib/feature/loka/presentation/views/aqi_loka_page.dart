@@ -1,9 +1,14 @@
+import 'package:bloom/common/colors.dart';
+import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/feature/loka/data/model/loka_aqi.dart';
 import 'package:bloom/feature/loka/presentation/cubit/aqi/aqi_cubit.dart';
+import 'package:bloom/feature/loka/presentation/methods/aqi_loka_widget.dart';
 import 'package:bloom/utils/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:logger/logger.dart';
 
 class AqiLokaPage extends StatefulWidget {
   static const String routeName = "aqi-loka-page";
@@ -25,9 +30,58 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
     context.read<AqiLokaCubit>().getLatLng();
-    });
+    // });
+  }
+
+  void addMarkerLocation(List<AqiLokaDataModel>? data) async {
+    if (data == null) return;
+
+    LoggerService.info("item length ${data.length}");
+    for (var item in data) {
+      Color? colorAqi;
+      dynamic aqiParse = item.aqi != "-" ? 
+      double.parse(item.aqi!)
+      : "-";
+      if (aqiParse == "-") {
+        colorAqi = neutralAccent1;
+      } else if (aqiParse < 50) {
+        colorAqi = primaryColor600;
+      } else if (aqiParse < 100) {
+        colorAqi = moderatColor500;
+      } else if (aqiParse < 150) {
+        colorAqi = tidakSehatColor600;
+      } else if (aqiParse < 200) {
+        colorAqi = tidakSehatBColor600;
+      } else if (aqiParse < 300) {
+        colorAqi = tidakSehatBColor800;
+      } else {
+        colorAqi = beracunColor950;
+      }
+
+      LoggerService.log("info data ${item.aqi}");
+
+      await controller.addMarker(
+        GeoPoint(latitude: item.lat!, longitude: item.lon!),
+        markerIcon: MarkerIcon(
+          iconWidget: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(shape: BoxShape.circle, color: colorAqi),
+            child: Center(
+              child: PrimaryText(
+                text: item.aqi,
+                color: whiteColor,
+                fontWeight: 900,
+                fontSize: 10.67,
+                letterSpacing: -0.13,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -37,9 +91,8 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
         listener: (context, state) {
           LoggerService.info("ini state dari aqi loka page $state");
           if (state is LokaAqiLoadedLocation) {
-            context
-                .read<AqiLokaCubit>()
-                .getAqiMapsData(state.lat, state.lng, state.lat2, state.lng2);
+            context.read<AqiLokaCubit>().getAqiMapsData(state.lat, state.lng,
+                state.lat2, state.lng2, state.realLat, state.realLng);
             LoggerService.info(
                 "lat lng dari loka aqi loaded ${state.lat}, ${state.lng}");
           }
@@ -48,21 +101,21 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
           if (state is LokaAqiLoaded) {
             return OSMFlutter(
                 controller: controller,
-                onMapIsReady: (isReady) {
+                onMapIsReady: (isReady) async {
                   if (isReady) {
-                    controller.changeLocation(
+                    addMarkerLocation(state.data);
+
+                    await controller.changeLocation(
                       GeoPoint(
-                        latitude:
-                            double.parse((state as LokaAqiLoadedLocation).lat!),
-                        longitude:
-                            double.parse((state as LokaAqiLoadedLocation).lng!),
+                        latitude: double.parse(state.lat!),
+                        longitude: double.parse(state.lng!),
                       ),
                     );
                   }
                 },
                 osmOption: OSMOption(
                     zoomOption: ZoomOption(
-                        initZoom: 15, minZoomLevel: 15, maxZoomLevel: 19)));
+                        initZoom: 10, minZoomLevel: 10, maxZoomLevel: 19)));
           } else {
             return ShimmerCard(height: double.infinity);
           }
