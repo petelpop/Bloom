@@ -11,6 +11,17 @@ final class AqiInitial extends AqiState {}
 
 final class LokaAqiLoading extends AqiState {}
 
+final class LokaAqiLoadingLocation extends AqiState {}
+
+final class LokaAqiFailedLocation extends AqiState {
+  final String? message;
+
+  LokaAqiFailedLocation({required this.message});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [message!];
+}
 final class LokaAqiLoadedLocation extends AqiState {
   final String? lat;
   final String? lng;
