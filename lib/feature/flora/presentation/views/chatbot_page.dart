@@ -5,6 +5,7 @@ import 'package:bloom/feature/flora/data/gemini_model.dart';
 import 'package:bloom/feature/flora/data/model/chat_model.dart';
 import 'package:bloom/feature/flora/presentation/methods/chatbot_design.dart';
 import 'package:bloom/utils/logger_service.dart';
+import 'package:bloom/utils/shared_storage.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -31,13 +32,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SharedStorage.setFloraIsOpen(true);
     messages = [
       ChatMessage(
           user: geminiUser,
           text: "Halo!, yuk tanya hal hal tentang lingkungan ke flora!",
           createdAt: DateTime.now()),
     ];
-
     gemini.prompt(
         generationConfig: GenerationConfig(
           temperature: 1,

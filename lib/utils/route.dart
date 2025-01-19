@@ -78,33 +78,30 @@ class AppRoute {
               name: PilahPage.routeName,
               builder: (context, state) {
                 return PilahPage();
-              },
-              routes: [
-                GoRoute(
-                  path: ResultPage.routeName,
-                  name: ResultPage.routeName,
-                  builder: (context, state) {
-                    return ResultPage(
-                      pilah: state.extra as PilahModel,
-                    );
-                  },
-                )
-              ]),
+              }),
           GoRoute(
-              path: FloraPage.routeName,
-              name: FloraPage.routeName,
-              builder: (context, state) {
-                return FloraPage();
-              },
-              routes: [
-                GoRoute(
-                  path: ChatbotPage.routeName,
-                  name: ChatbotPage.routeName,
-                  builder: (context, state) {
-                    return ChatbotPage();
-                  },
-                ),
-              ])
+            path: ResultPage.routeName,
+            name: ResultPage.routeName,
+            builder: (context, state) {
+              return ResultPage(
+                pilah: state.extra as PilahModel,
+              );
+            },
+          ),
+          GoRoute(
+            path: FloraPage.routeName,
+            name: FloraPage.routeName,
+            builder: (context, state) {
+              return FloraPage();
+            },
+          ),
+          GoRoute(
+            path: ChatbotPage.routeName,
+            name: ChatbotPage.routeName,
+            builder: (context, state) {
+              return ChatbotPage();
+            },
+          ),
         ]),
   ]);
 }
