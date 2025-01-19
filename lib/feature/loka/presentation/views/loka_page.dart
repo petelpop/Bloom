@@ -25,10 +25,7 @@ class _LokaPageState extends State<LokaPage> {
   GeoPoint? nearestLocation;
 
   MapController controller = MapController.withPosition(
-     initPosition:  GeoPoint(
-        latitude: 0,
-         longitude: 0)
-    );
+      initPosition: GeoPoint(latitude: 0, longitude: 0));
 
   void addMarker() async {
     for (var location in markerLocations) {
@@ -74,117 +71,118 @@ class _LokaPageState extends State<LokaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocConsumer<LokaCubit, LokaState>(
-          listener: (context, state) {
-        if (state is LokaLoaded) {
+        body: BlocConsumer<LokaCubit, LokaState>(listener: (context, state) {
+      if (state is LokaLoaded) {
         LoggerService.info("ini state dari loka $state");
         LoggerService.info("state lat ${state.lat}, state lng ${state.lng}");
-        controller.changeLocation(
-          GeoPoint(
-            latitude: double.parse(state.lat!),
-            longitude: double.parse(state.lng!),
-          ),
-        );
       }
     }, builder: (context, state) {
       if (state is LokaLoaded) {
-              return Stack(
-        children: [
-          OSMFlutter(
-            controller: controller,
-            osmOption: OSMOption(
-                markerOption: MarkerOption(),
-                zoomOption: ZoomOption(initZoom: 18)),
-            onMapIsReady: (_) {
-              if (_) {
-                addMarker();
-                LoggerService.error("on map is ready ? $_");
-              }
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              height: 200,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 560),
-              decoration: BoxDecoration(
-                  color: whiteColor, borderRadius: BorderRadius.circular(20)),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          Constants.icTrashGray,
-                          width: 20,
-                        ),
-                        SizedBox(width: 6),
-                        PrimaryText(
-                          text: "Lokasi Terdekat",
-                          color: neutralAccent1,
-                          fontSize: 12,
-                          letterSpacing: -0.2,
-                          lineHeight: 1.4,
-                          fontWeight: 500,
-                        )
-                      ],
+        return Stack(
+          children: [
+            OSMFlutter(
+              controller: controller,
+              osmOption: OSMOption(
+                  markerOption: MarkerOption(),
+                  zoomOption: ZoomOption(
+                      initZoom: 15, minZoomLevel: 15, maxZoomLevel: 19)),
+              onMapIsReady: (_) async {
+                if (_) {
+                  await controller.changeLocation(
+                    GeoPoint(
+                      latitude: double.parse(state.lat!),
+                      longitude: double.parse(state.lng!),
                     ),
-                    SizedBox(height: 8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        PrimaryText(
-                          text: nearestDistance != null
-                              ? "${nearestDistance!.toStringAsFixed(2)}m"
-                              : "...",
-                          lineHeight: 1.4,
-                          letterSpacing: -0.2,
-                          fontSize: 28,
-                          fontWeight: 900,
-                          color: neutralDefault,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        PrimaryText(
-                          text: "Dari Kamu",
-                          lineHeight: 1.4,
-                          letterSpacing: -0.2,
-                          color: neutralTertiary,
-                        )
-                      ],
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.symmetric(vertical: 16),
-                      child: Divider(
-                        color: surface300,
-                        height: 1,
+                  );
+                  LoggerService.error("on map is ready ? $_");
+                  addMarker();
+
+                }
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                height: 200,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 560),
+                decoration: BoxDecoration(
+                    color: whiteColor, borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            Constants.icTrashGray,
+                            width: 20,
+                          ),
+                          SizedBox(width: 6),
+                          PrimaryText(
+                            text: "Lokasi Terdekat",
+                            color: neutralAccent1,
+                            fontSize: 12,
+                            letterSpacing: -0.2,
+                            lineHeight: 1.4,
+                            fontWeight: 500,
+                          )
+                        ],
                       ),
-                    ),
-                    PrimaryButton(
-                      width: double.infinity,
-                      text: "Lihat di GMaps",
-                      height: 40,
-                      // function: () {},
-                      function: () async {
-                        if (nearestLocation?.latitude != null) {
-                          await context.read<LokaCubit>().openMap(
-                              nearestLocation!.latitude,
-                              nearestLocation!.longitude);
-                        }
-                      },
-                    )
-                  ],
+                      SizedBox(height: 8),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          PrimaryText(
+                            text: nearestDistance != null
+                                ? "${nearestDistance!.toStringAsFixed(2)}m"
+                                : "...",
+                            lineHeight: 1.4,
+                            letterSpacing: -0.2,
+                            fontSize: 28,
+                            fontWeight: 900,
+                            color: neutralDefault,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          PrimaryText(
+                            text: "Dari Kamu",
+                            lineHeight: 1.4,
+                            letterSpacing: -0.2,
+                            color: neutralTertiary,
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(vertical: 16),
+                        child: Divider(
+                          color: surface300,
+                          height: 1,
+                        ),
+                      ),
+                      PrimaryButton(
+                        width: double.infinity,
+                        text: "Lihat di GMaps",
+                        height: 40,
+                        // function: () {},
+                        function: () async {
+                          if (nearestLocation?.latitude != null) {
+                            await context.read<LokaCubit>().openMap(
+                                nearestLocation!.latitude,
+                                nearestLocation!.longitude);
+                          }
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
-      );
+            )
+          ],
+        );
       } else {
         return ShimmerCard(height: double.infinity);
       }

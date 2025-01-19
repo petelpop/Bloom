@@ -107,8 +107,6 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                 controller: controller,
                 onMapIsReady: (isReady) async {
                   if (isReady) {
-                    addMarkerLocation(state.data);
-
                     await controller.changeLocation(
                       GeoPoint(
                         latitude: double.parse(state.lat!),
@@ -116,19 +114,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                       ),
                     );
 
-                    await controller.changeLocationMarker(
-                        oldLocation: GeoPoint(
-                          latitude: double.parse(state.lat!),
-                          longitude: double.parse(state.lng!),
-                        ),
-                        newLocation: GeoPoint(
-                          latitude: double.parse(state.lat!),
-                          longitude: double.parse(state.lng!),
-                        ),
-                        markerIcon: MarkerIcon(
-                          icon: Icon(Icons.location_history,
-                              size: 48, color: primaryColor600),
-                        ));
+                    addMarkerLocation(state.data);
                   }
                 },
                 osmOption: OSMOption(
