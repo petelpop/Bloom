@@ -1,7 +1,7 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
-import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
 import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
 import 'package:bloom/feature/terra/data/article_dummy.dart';

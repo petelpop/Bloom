@@ -1,6 +1,6 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/primary_text.dart';
-import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/methods/status_failed_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_widget.dart';

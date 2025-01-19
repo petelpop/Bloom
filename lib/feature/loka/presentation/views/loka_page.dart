@@ -2,7 +2,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
-import 'package:bloom/common/shimmer_card.dart';
+import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/loka/presentation/cubit/loka/loka_cubit.dart';
 import 'package:bloom/feature/loka/presentation/methods/calculate_distance.dart';
 import 'package:bloom/feature/loka/presentation/methods/trash_list.dart';
