@@ -1,6 +1,8 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/feature/home/presentation/methods/info_widget.dart';
+import 'package:bloom/utils/modal_bottom.dart';
 import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
 import 'package:bloom/feature/pilah/presentation/views/pilah_page.dart';
@@ -16,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "home-page";
@@ -27,6 +30,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Position? position;
+
+  List<Map<String, dynamic>> infoData = [
+    {"text": "Baik", "color": primaryColor600, "aqi": "0-50"},
+    {"text": "Moderat", "color": moderatColor500, "aqi": "51-100"},
+    {
+      "text": "Tidak Sehat Bagi Sensitif",
+      "color": tidakSehatColor600,
+      "aqi": "101-150"
+    },
+    {"text": "Tidak Sehat", "color": tidakSehatBColor600, "aqi": "151-200"},
+    {"text": "Berbahaya", "color": tidakSehatBColor800, "aqi": "201-300"},
+    {"text": "Beracun", "color": beracunColor950, "aqi": "301-500"},
+  ];
 
   @override
   void initState() {
@@ -67,13 +83,11 @@ class _HomePageState extends State<HomePage> {
                     letterSpacing: -0.1,
                   ),
                   const SizedBox(height: 22),
-                  BlocConsumer<AqiCubit, AqiState>(
-                    listener: (context, state) {
+                  BlocConsumer<AqiCubit, AqiState>(listener: (context, state) {
                     if (state is AqiLoadedLocation) {
                       context.read<AqiCubit>().getAqiData(state.lat, state.lng);
                     }
-                  }, 
-                  builder: (context, state) {
+                  }, builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");
                     if (state is AqiLoading) {
                       return const ShimmerCard(
@@ -85,9 +99,71 @@ class _HomePageState extends State<HomePage> {
                     if (state is AqiLoaded) {
                       LoggerService.info(
                           "ini city dari aqi ${state.data?.city?.name}");
-                      return StatusWidget(
-                        city: state.data?.city?.name?.split(" ")[0],
-                        aqi: state.data?.aqi.toString(),
+                      return InkWell(
+                        onTap: () {
+                          ModalBottom.show(context,
+                              view: Container(
+                                height: 75.h,
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 14),
+                                      Container(
+                                        width: 56,
+                                        height: 6,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(110),
+                                          color: neutralLight,
+                                        ),
+                                      ),
+                                      SizedBox(height: 20),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          PrimaryText(
+                                            text: "AQI Itu Apa Sih?",
+                                            fontWeight: 700,
+                                            fontSize: 18,
+                                            lineHeight: 1.4,
+                                            letterSpacing: -0.1,
+                                            color: neutralDefault,
+                                          ),
+                                          SizedBox(height: 4),
+                                          PrimaryText(
+                                            text:
+                                                "Indeks kualitas udara memudahkan kita memahami udara yang kita hirup. Cukup ingat warnanya!",
+                                            fontSize: 14,
+                                            lineHeight: 1.4,
+                                            letterSpacing: -0.1,
+                                            color: neutralTertiary,
+                                          ),
+                                          SizedBox(height: 20),
+                                          Column(
+                                            children: infoData.map(
+                                              (data) {
+                                                return InfoWidget(
+                                                    text: data["text"],
+                                                    aqi: data["aqi"],
+                                                    color: data["color"]);
+                                              },
+                                            ).toList(),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: StatusWidget(
+                          city: state.data?.city?.name?.split(" ")[0],
+                          aqi: state.data?.aqi.toString(),
+                        ),
                       );
                     }
                     if (state is AqiFailed) {
