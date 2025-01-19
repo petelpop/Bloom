@@ -36,7 +36,7 @@ final class LokaAqiLoadedLocation extends AqiState {
 }
 
 final class LokaAqiLoaded extends AqiState {
-  final AqiLoka? data;
+  final List<AqiLokaDataModel>? data;
 
   LokaAqiLoaded({required this.data});
 

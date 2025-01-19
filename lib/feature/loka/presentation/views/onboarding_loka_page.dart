@@ -2,6 +2,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
+import 'package:bloom/feature/loka/presentation/views/aqi_loka_page.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -56,10 +57,15 @@ class OnboardingLokaPage extends StatelessWidget {
                           text: "Tempat Sampah",
                           desc: "Dicariin yang terdekat"),
                     ),
-                    ShortcutWidget(
-                        icon: Constants.icTrash,
-                        text: "Tempat Sampah",
-                        desc: "Dicariin yang terdekat"),
+                    InkWell(
+                      onTap: () {
+                        context.pushNamed(AqiLokaPage.routeName);
+                      },
+                      child: ShortcutWidget(
+                          icon: Constants.icTrash,
+                          text: "Tempat Sampah",
+                          desc: "Dicariin yang terdekat"),
+                    ),
                   ],
                 )
               ],

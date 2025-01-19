@@ -1,6 +1,8 @@
 import 'package:bloom/feature/flora/presentation/views/chatbot_page.dart';
 import 'package:bloom/feature/flora/presentation/views/flora_page.dart';
 import 'package:bloom/feature/home/presentation/views/home_page.dart';
+import 'package:bloom/feature/loka/data/model/loka_aqi.dart';
+import 'package:bloom/feature/loka/presentation/views/aqi_loka_page.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
 import 'package:bloom/feature/loka/presentation/views/onboarding_loka_page.dart';
 import 'package:bloom/feature/main/presentation/views/main_page.dart';
@@ -49,7 +51,14 @@ class AppRoute {
             builder: (context, state) {
               return OnboardingLokaPage();
             },
-        ),
+          ),
+          GoRoute(
+            path: AqiLokaPage.routeName,
+            name: AqiLokaPage.routeName,
+            builder: (context, state) {
+              return AqiLokaPage();
+            },
+          ),
           GoRoute(
             path: LokaPage.routeName,
             name: LokaPage.routeName,

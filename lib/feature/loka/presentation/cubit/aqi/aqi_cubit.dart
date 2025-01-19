@@ -4,18 +4,43 @@ import 'package:bloc/bloc.dart';
 import 'package:bloom/feature/loka/data/model/loka_aqi.dart';
 import 'package:bloom/feature/loka/data/services/services.dart';
 import 'package:bloom/utils/logger_service.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'aqi_state.dart';
 
-class AqiCubit extends Cubit<AqiState> {
-  AqiCubit() : super(AqiInitial());
+class AqiLokaCubit extends Cubit<AqiState> {
+  AqiLokaCubit() : super(AqiInitial());
 
   final _services = LokaServices();
 
+    void getAqiMapsData(String? lat, String? lng, String? lat2, String? lng2) async {
+
+    if (lat == null || lng == null || lat2 == null || lng2 == null) {
+    emit(LokaAqiFailed(message: "Latitude or Longitude cannot be null"));
+    return;
+  }
+
+    emit(LokaAqiLoading());
+    try {
+      final result = await _services.getAqiLocationData(lat, lng, lat2, lng2);
+      result.fold(
+        (l) {
+          emit(LokaAqiFailed(message: l.message));
+        }, 
+        (r) {
+          emit(LokaAqiLoaded(data: r.data));
+        }
+        );
+    } on DioException catch (e) {
+      emit(LokaAqiFailed(message: e.toString()));
+    }
+  }
+
   Future<void> getLatLng() async {
     try {
+      emit(LokaAqiLoadingLocation());
        bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
       emit(LokaAqiFailedLocation(message: 'Location services are disabled.'));
@@ -30,12 +55,12 @@ class AqiCubit extends Cubit<AqiState> {
   }
 
   Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
+      desiredAccuracy: LocationAccuracy.lowest);
 
   double latitude = position.latitude;
   double longitude = position.longitude;
 
-  double distance = 1.0; 
+  double distance = 20.0; 
   double latOffset = distance / 110.574; 
   double lngOffset = distance / (111.320 * cos(latitude * (pi / 180)));
 

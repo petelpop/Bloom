@@ -13,6 +13,7 @@ class ArticlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFDFDFD),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
