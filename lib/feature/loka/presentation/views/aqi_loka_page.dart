@@ -65,17 +65,22 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
       await controller.addMarker(
         GeoPoint(latitude: item.lat!, longitude: item.lon!),
         markerIcon: MarkerIcon(
-          iconWidget: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: colorAqi),
-            child: Center(
-              child: PrimaryText(
-                text: item.aqi,
-                color: whiteColor,
-                fontWeight: 900,
-                fontSize: 10.67,
-                letterSpacing: -0.13,
+          iconWidget: AnimatedScale(
+            scale: 1,
+            curve: Curves.easeOut,
+            duration: Duration(milliseconds: 3000),
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: colorAqi),
+              child: Center(
+                child: PrimaryText(
+                  text: item.aqi,
+                  color: whiteColor,
+                  fontWeight: 900,
+                  fontSize: 10.67,
+                  letterSpacing: -0.13,
+                ),
               ),
             ),
           ),
@@ -115,7 +120,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                 },
                 osmOption: OSMOption(
                     zoomOption: ZoomOption(
-                        initZoom: 10, minZoomLevel: 10, maxZoomLevel: 19)));
+                        initZoom: 5, minZoomLevel: 5, maxZoomLevel: 19)));
           } else {
             return ShimmerCard(height: double.infinity);
           }
