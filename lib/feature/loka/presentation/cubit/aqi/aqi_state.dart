@@ -1,19 +1,19 @@
 part of 'aqi_cubit.dart';
 
-sealed class AqiState extends Equatable {
-  const AqiState();
+sealed class LokaAqiState extends Equatable {
+  const LokaAqiState();
 
   @override
   List<Object> get props => [];
 }
 
-final class AqiInitial extends AqiState {}
+final class AqiInitial extends LokaAqiState {}
 
-final class LokaAqiLoading extends AqiState {}
+final class LokaAqiLoading extends LokaAqiState {}
 
-final class LokaAqiLoadingLocation extends AqiState {}
+final class LokaAqiLoadingLocation extends LokaAqiState {}
 
-final class LokaAqiFailedLocation extends AqiState {
+final class LokaAqiFailedLocation extends LokaAqiState {
   final String? message;
 
   LokaAqiFailedLocation({required this.message});
@@ -22,7 +22,7 @@ final class LokaAqiFailedLocation extends AqiState {
   // TODO: implement props
   List<Object> get props => [message!];
 }
-final class LokaAqiLoadedLocation extends AqiState {
+final class LokaAqiLoadedLocation extends LokaAqiState {
   final String? lat;
   final String? lng;
   final String? lat2;
@@ -35,7 +35,7 @@ final class LokaAqiLoadedLocation extends AqiState {
   List<Object> get props => [lat!, lng!, lat2!, lng2!];
 }
 
-final class LokaAqiLoaded extends AqiState {
+final class LokaAqiLoaded extends LokaAqiState {
   final List<AqiLokaDataModel>? data;
 
   LokaAqiLoaded({required this.data});
@@ -45,7 +45,7 @@ final class LokaAqiLoaded extends AqiState {
   List<Object> get props => [data!];
 }
 
-final class LokaAqiFailed extends AqiState {
+final class LokaAqiFailed extends LokaAqiState {
   final String? message;
 
   LokaAqiFailed({required this.message});
