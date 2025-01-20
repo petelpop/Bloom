@@ -43,8 +43,10 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
   void addMarkerLocation(List<AqiLokaDataModel>? data) async {
     if (data == null) return;
 
+    // List<Future<void>> markerFutures = [];
+
     LoggerService.info("item length ${data.length}");
-    for (var item in data) { 
+    for (var item in data) {
       Color? colorAqi;
       dynamic aqiParse = item.aqi != "-" ? double.parse(item.aqi!) : "-";
       if (aqiParse == "-") {
@@ -64,8 +66,8 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
       }
 
       LoggerService.log("info data ${item.aqi}");
-
-      await controller.addMarker(
+      // markerFutures.add(
+        await controller.addMarker(
         GeoPoint(latitude: item.lat!, longitude: item.lon!),
         markerIcon: MarkerIcon(
           iconWidget: AnimatedScale(
@@ -89,8 +91,10 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
             ),
           ),
         ),
+      // )
       );
     }
+      // await Future.wait(markerFutures);
   }
 
   @override
@@ -191,7 +195,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
               ],
             );
           } else {
-            return ShimmerCard(height: double.infinity);
+            return Center(child: CircularProgressIndicator(),);
           }
         },
       ),

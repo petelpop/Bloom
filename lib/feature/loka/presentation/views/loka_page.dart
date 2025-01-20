@@ -210,7 +210,7 @@ class _LokaPageState extends State<LokaPage> {
               ],
             );
           } else {
-            return ShimmerCard(height: double.infinity);
+            return Center(child: CircularProgressIndicator(),);
           }
         }));
   }
