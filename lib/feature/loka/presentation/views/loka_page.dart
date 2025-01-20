@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
@@ -28,22 +30,32 @@ class _LokaPageState extends State<LokaPage> {
   MapController controller = MapController.withPosition(
       initPosition: GeoPoint(latitude: 0, longitude: 0));
 
-  void addMarker() async {
+  void addMarker(double lat, double lng) async {
+    List<Future<void>> markerFutures = [];
+
     for (var location in markerLocations) {
-      await controller.addMarker(
-        location,
-        markerIcon: MarkerIcon(
-          iconWidget: RepaintBoundary(
-            child: Image.asset(
-              Constants.icLocationOsm,
-              width: 48,
-              height: 48,
+      markerFutures.add(
+        controller.addMarker(
+          location,
+          markerIcon: MarkerIcon(
+            iconWidget: RepaintBoundary(
+              child: Image.asset(
+                Constants.icLocationOsm,
+                width: 48,
+                height: 48,
+              ),
             ),
           ),
         ),
       );
     }
-    calculateNearestDistance();
+
+    await Future.wait(markerFutures).then((_) {
+      calculateNearestDistance(
+        lat,
+        lng
+      );
+    });
   }
 
   @override
@@ -53,12 +65,10 @@ class _LokaPageState extends State<LokaPage> {
     context.read<LokaCubit>().getLocation();
   }
 
-  void calculateNearestDistance() {
-    final thisPosition = controller.initPosition;
-
+  void calculateNearestDistance(double lat, double lng) {
     for (var location in markerLocations) {
-      double distance = calculateDistance(thisPosition!.latitude,
-          thisPosition.longitude, location.latitude, location.longitude);
+      double distance = calculateDistance(lat,
+          lng, location.latitude, location.longitude);
 
       if (nearestDistance == null || distance < nearestDistance!) {
         setState(() {
@@ -72,128 +82,136 @@ class _LokaPageState extends State<LokaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: PrimaryText(
-          text: "Loka",
-          color: neutralDefault,
-          fontSize: 16,
-          fontWeight: 500,),
-      ),
+        appBar: AppBar(
+          title: PrimaryText(
+            text: "Loka",
+            color: neutralDefault,
+            fontSize: 16,
+            fontWeight: 500,
+          ),
+        ),
         body: BlocConsumer<LokaCubit, LokaState>(listener: (context, state) {
-      if (state is LokaLoaded) {
-        LoggerService.info("ini state dari loka $state");
-        LoggerService.info("state lat ${state.lat}, state lng ${state.lng}");
-      }
-    }, builder: (context, state) {
-      if (state is LokaLoaded) {
-        return Stack(
-          children: [
-            OSMFlutter(
-              controller: controller,
-              osmOption: OSMOption(
-                  markerOption: MarkerOption(),
-                  zoomOption: ZoomOption(
-                      initZoom: 15, minZoomLevel: 15, maxZoomLevel: 19)),
-              onMapIsReady: (_) async {
-                if (_) {
-                  await controller.changeLocation(
-                    GeoPoint(
-                      latitude: double.parse(state.lat!),
-                      longitude: double.parse(state.lng!),
-                    ),
-                  );
-                  LoggerService.error("on map is ready ? $_");
-                  addMarker();
-
-                }
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                height: 200,
-                width: double.infinity,
-                margin: EdgeInsets.only(top: 55.h),
-                decoration: BoxDecoration(
-                    color: whiteColor, borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            Constants.icTrashGray,
-                            width: 20,
-                          ),
-                          SizedBox(width: 6),
-                          PrimaryText(
-                            text: "Lokasi Terdekat",
-                            color: neutralAccent1,
-                            fontSize: 12,
-                            letterSpacing: -0.2,
-                            lineHeight: 1.4,
-                            fontWeight: 500,
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          PrimaryText(
-                            text: nearestDistance != null
-                                ? "${nearestDistance!.toStringAsFixed(2)}m"
-                                : "...",
-                            lineHeight: 1.4,
-                            letterSpacing: -0.2,
-                            fontSize: 28,
-                            fontWeight: 900,
-                            color: neutralDefault,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          PrimaryText(
-                            text: "Dari Kamu",
-                            lineHeight: 1.4,
-                            letterSpacing: -0.2,
-                            color: neutralTertiary,
-                          )
-                        ],
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(vertical: 16),
-                        child: Divider(
-                          color: surface300,
-                          height: 1,
+          if (state is LokaLoaded) {
+            LoggerService.info("ini state dari loka $state");
+            LoggerService.info(
+                "state lat ${state.lat}, state lng ${state.lng}");
+          }
+        }, builder: (context, state) {
+          if (state is LokaLoaded) {
+            return Stack(
+              children: [
+                OSMFlutter(
+                  controller: controller,
+                  osmOption: OSMOption(
+                      markerOption: MarkerOption(),
+                      zoomOption: ZoomOption(
+                          initZoom: 15, minZoomLevel: 15, maxZoomLevel: 19)),
+                  onMapIsReady: (_) async {
+                    if (_) {
+                      await controller.changeLocation(
+                        GeoPoint(
+                          latitude: double.parse(state.lat!),
+                          longitude: double.parse(state.lng!),
                         ),
-                      ),
-                      PrimaryButton(
-                        width: double.infinity,
-                        text: "Lihat di GMaps",
-                        fontWeight: 600,
-                        height: 40,
-                        function: () async {
-                          if (nearestLocation?.latitude != null) {
-                            await context.read<LokaCubit>().openMap(
-                                nearestLocation!.latitude,
-                                nearestLocation!.longitude);
-                          }
-                        },
-                      )
-                    ],
-                  ),
+                      );
+                      LoggerService.error("on map is ready ? $_");
+                      addMarker(
+                        double.parse(state.lat!),
+                        double.parse(state.lng!)
+                      );
+                    }
+                  },
                 ),
-              ),
-            )
-          ],
-        );
-      } else {
-        return ShimmerCard(height: double.infinity);
-      }
-    }));
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    height: 200,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: 55.h),
+                    decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                Constants.icTrashGray,
+                                width: 20,
+                              ),
+                              SizedBox(width: 6),
+                              PrimaryText(
+                                text: "Lokasi Terdekat",
+                                color: neutralAccent1,
+                                fontSize: 12,
+                                letterSpacing: -0.2,
+                                lineHeight: 1.4,
+                                fontWeight: 500,
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              PrimaryText(
+                                text: nearestDistance != null
+                                    ? nearestDistance! < 1000
+                                        ? "${nearestDistance!.toStringAsFixed(0)} m"
+                                        : "${(nearestDistance! / 1000).toStringAsFixed(2)} km"
+                                    : "...",
+                                lineHeight: 1.4,
+                                letterSpacing: -0.2,
+                                fontSize: 28,
+                                fontWeight: 900,
+                                color: neutralDefault,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              PrimaryText(
+                                text: "Dari Kamu",
+                                lineHeight: 1.4,
+                                letterSpacing: -0.2,
+                                color: neutralTertiary,
+                              )
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.symmetric(vertical: 16),
+                            child: Divider(
+                              color: surface300,
+                              height: 1,
+                            ),
+                          ),
+                          PrimaryButton(
+                            width: double.infinity,
+                            text: "Lihat di GMaps",
+                            fontWeight: 600,
+                            height: 40,
+                            function: () async {
+                              if (nearestLocation?.latitude != null) {
+                                await context.read<LokaCubit>().openMap(
+                                    nearestLocation!.latitude,
+                                    nearestLocation!.longitude);
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          } else {
+            return ShimmerCard(height: double.infinity);
+          }
+        }));
   }
 }

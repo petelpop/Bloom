@@ -5,7 +5,7 @@ List<String> articleDummyImage = [
 "https://www.obsessionnews.com/uploads/media/2025/01/18/002-5753a4.jpeg",
 "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01jhp6ezwybqh43tpavtxr6fgp.jpg",
 "https://dlh.semarangkota.go.id/wp-content/uploads/2021/02/blogspot-com-5-1024x724.jpg",
-"",
+"https://dlh.semarangkota.go.id/wp-content/uploads/2021/02/hermes-rivera-265412-unsplash-1024x683.jpg",
 "https://disperkimta.bulelengkab.go.id/uploads/konten/pentingnya-menjaga-lingkungan-bagi-kelestarian-alam-46.jpg",
 
 ];
