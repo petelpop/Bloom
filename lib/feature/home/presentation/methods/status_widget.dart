@@ -23,7 +23,7 @@ class StatusWidget extends StatelessWidget {
     String? aqiDesc;
     double aqiParse = double.parse(aqi!);
 
-  if (aqiParse < 50) {
+  if (aqiParse <= 50) {
     colorAqi = primaryColor600;
     borderDesc = primaryColor100;
     textColor = primaryColor600;
@@ -31,7 +31,7 @@ class StatusWidget extends StatelessWidget {
     aqiStatus = "Baik";
     aqiIcon = Constants.icHeart;
     aqiDesc = "Udaranya lagi bagus nih, olahraga yuk!";
-  } else if (aqiParse < 100) {
+  } else if (aqiParse <= 100) {
     colorAqi = moderatColor500;
     borderDesc = moderatColor100;
     textColor = moderatColor600;
@@ -39,7 +39,7 @@ class StatusWidget extends StatelessWidget {
     aqiStatus = "Moderat";
     aqiIcon = Constants.icMask;
     aqiDesc = "Gunakan masker jika beraktivitas diluar ruangan.";
-  } else if (aqiParse < 150) {
+  } else if (aqiParse <= 150) {
     colorAqi = tidakSehatColor600;
     borderDesc = tidakSehatColor100;
     textColor = tidakSehatColor600;
@@ -47,7 +47,7 @@ class StatusWidget extends StatelessWidget {
     aqiStatus = "Tidak Sehat";
     aqiIcon = Constants.icDanger;
     aqiDesc = "Kelompok sensitif sebaiknya kurangi aktivitas di luar.";
-  } else if (aqiParse < 200) {
+  } else if (aqiParse <= 200) {
     colorAqi = tidakSehatBColor600;
     borderDesc = tidakSehatBColor100;
     textColor = tidakSehatBColor600;
@@ -55,7 +55,7 @@ class StatusWidget extends StatelessWidget {
     aqiStatus = "Tidak Sehat";
     aqiIcon = Constants.icDangerTriangleRed;
     aqiDesc = "Hindari aktivitas berat di luar ruangan.";
-  } else if (aqiParse < 300) {
+  } else if (aqiParse <= 300) {
     colorAqi = tidakSehatBColor800;
     borderDesc = tidakSehatBColor100;
     textColor = tidakSehatBColor800;

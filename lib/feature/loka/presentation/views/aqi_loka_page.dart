@@ -49,15 +49,15 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
       dynamic aqiParse = item.aqi != "-" ? double.parse(item.aqi!) : "-";
       if (aqiParse == "-") {
         colorAqi = neutralAccent1;
-      } else if (aqiParse < 50) {
+      } else if (aqiParse <= 50) {
         colorAqi = primaryColor600;
-      } else if (aqiParse < 100) {
+      } else if (aqiParse <= 100) {
         colorAqi = moderatColor500;
-      } else if (aqiParse < 150) {
+      } else if (aqiParse <= 150) {
         colorAqi = tidakSehatColor600;
-      } else if (aqiParse < 200) {
+      } else if (aqiParse <= 200) {
         colorAqi = tidakSehatBColor600;
-      } else if (aqiParse < 300) {
+      } else if (aqiParse <= 300) {
         colorAqi = tidakSehatBColor800;
       } else {
         colorAqi = beracunColor950;
