@@ -62,7 +62,7 @@ class AqiLokaCubit extends Cubit<LokaAqiState> {
       }
 
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+          desiredAccuracy: LocationAccuracy.lowest);
       double latitude = position.latitude;
       double longitude = position.longitude;
 
