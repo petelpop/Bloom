@@ -72,6 +72,13 @@ class _LokaPageState extends State<LokaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: PrimaryText(
+          text: "Loka",
+          color: neutralDefault,
+          fontSize: 16,
+          fontWeight: 500,),
+      ),
         body: BlocConsumer<LokaCubit, LokaState>(listener: (context, state) {
       if (state is LokaLoaded) {
         LoggerService.info("ini state dari loka $state");
@@ -106,7 +113,7 @@ class _LokaPageState extends State<LokaPage> {
               child: Container(
                 height: 200,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 75.h),
+                margin: EdgeInsets.only(top: 55.h),
                 decoration: BoxDecoration(
                     color: whiteColor, borderRadius: BorderRadius.circular(20)),
                 child: Padding(

@@ -14,6 +14,7 @@ import 'package:bloom/feature/home/presentation/methods/shortcut_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_failed_widget.dart';
 import 'package:bloom/feature/home/presentation/methods/status_widget.dart';
 import 'package:bloom/utils/logger_service.dart';
+import 'package:bloom/utils/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -83,9 +84,16 @@ class _HomePageState extends State<HomePage> {
                     letterSpacing: -0.1,
                   ),
                   const SizedBox(height: 22),
-                  BlocConsumer<AqiCubit, AqiState>(listener: (context, state) {
+                  BlocConsumer<AqiCubit, AqiState>(
+                    listener: (context, state) {
                     if (state is AqiLoadedLocation) {
                       context.read<AqiCubit>().getAqiData(state.lat, state.lng);
+                    }
+                    if (state is AqiLocationFailed || state is AqiFailed) {
+                      ToastWidget.showToast(context, 
+                      message: "terjadi kesalahan, silahkan coba lagi!",
+                      position: ToastPosition.BOTTOM,
+                      duration: Duration(seconds: 2));
                     }
                   }, builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");

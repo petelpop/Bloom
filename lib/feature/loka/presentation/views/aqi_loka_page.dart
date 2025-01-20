@@ -8,6 +8,7 @@ import 'package:bloom/feature/loka/data/model/loka_aqi.dart';
 import 'package:bloom/feature/loka/presentation/cubit/aqi/aqi_cubit.dart';
 import 'package:bloom/feature/loka/presentation/methods/aqi_loka_widget.dart';
 import 'package:bloom/utils/logger_service.dart';
+import 'package:bloom/utils/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -95,6 +96,14 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: PrimaryText(
+          text: "Loka Oksi",
+          color: neutralDefault,
+          fontSize: 16,
+          fontWeight: 500,
+        ),
+      ),
       body: BlocConsumer<AqiLokaCubit, LokaAqiState>(
         listener: (context, state) {
           LoggerService.info("ini state dari aqi loka page $state");
@@ -104,6 +113,12 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                 state.lat2, state.lng2, state.realLat, state.realLng);
             LoggerService.info(
                 "lat lng dari loka aqi loaded ${state.lat}, ${state.lng}");
+          }
+          if (state is LokaAqiFailed || state is LokaAqiFailedLocation) {
+            ToastWidget.showToast(context,
+                message: "terjadi kesalahan, silahkan coba lagi!",
+                position: ToastPosition.BOTTOM,
+                duration: Duration(seconds: 2));
           }
         },
         builder: (context, state) {
@@ -140,7 +155,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
-                      margin: EdgeInsets.only(top: 75.h),
+                      margin: EdgeInsets.only(top: 60.h),
                       child: BlocBuilder<AqiCubit, AqiState>(
                         builder: (context, stateAqi) {
                           if (stateAqi is AqiLoading) {
