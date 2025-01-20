@@ -44,7 +44,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
     if (data == null) return;
 
     LoggerService.info("item length ${data.length}");
-    for (var item in data) {
+    for (var item in data) { 
       Color? colorAqi;
       dynamic aqiParse = item.aqi != "-" ? double.parse(item.aqi!) : "-";
       if (aqiParse == "-") {
