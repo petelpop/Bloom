@@ -192,23 +192,32 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          context.pushNamed(PilahPage.routeName);
-                        },
-                        child: ShortcutWidget(
-                            icon: Constants.icBox,
-                            text: "Pilah Sampah",
-                            desc: "Sebelum dibuang, pilah dulu!"),
+                      Expanded(
+                        flex: 7,
+                        child: InkWell(
+                          onTap: () {
+                            context.pushNamed(PilahPage.routeName);
+                          },
+                          child: ShortcutWidget(
+                              icon: Constants.icBox,
+                              text: "Pilah Sampah",
+                              desc: "Sebelum dibuang, pilah dulu!"),
+                        ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          context.pushNamed(FloraPage.routeName);
-                        },
-                        child: ShortcutWidget(
-                            icon: Constants.icChatDots,
-                            text: "Tanya Flora",
-                            desc: "Chatbot AI yang peduli bumi."),
+                      Expanded(
+                        flex: 1,
+                        child: Container()),
+                      Expanded(
+                        flex: 7,
+                        child: InkWell(
+                          onTap: () {
+                            context.pushNamed(FloraPage.routeName);
+                          },
+                          child: ShortcutWidget(
+                              icon: Constants.icChatDots,
+                              text: "Tanya Flora",
+                              desc: "Chatbot AI yang peduli bumi."),
+                        ),
                       )
                     ],
                   ),

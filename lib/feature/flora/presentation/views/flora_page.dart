@@ -36,109 +36,120 @@ class _FloraPageState extends State<FloraPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFDFDFD),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(Constants.imgSparklesBg),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: isOpen == false
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PrimaryText(
-                        text: "Kenalin, Flora!",
-                        fontSize: 28,
-                        fontWeight: 700,
-                        lineHeight: 1.4,
-                        letterSpacing: -0.2,
-                        color: neutralDefault,
-                      ),
-                      SizedBox(height: 8),
-                      PrimaryText(
-                        text:
-                            "Flora adalah chatbot yang akan membantu menjawab semua pertanyaan kamu seputar lingkungan.",
-                        fontSize: 16,
-                        color: neutralSecondary,
-                        lineHeight: 1.4,
-                        letterSpacing: -0.1,
-                      ),
-                      SizedBox(height: 28),
-                      PrimaryButton(
-                          width: double.infinity,
-                          text: "Chat",
-                          fontSize: 16,
-                          textColor: whiteColor,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(Constants.imgSparklesBg),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: isOpen == false
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PrimaryText(
+                          text: "Kenalin, Flora!",
+                          fontSize: 28,
                           fontWeight: 700,
                           lineHeight: 1.4,
                           letterSpacing: -0.2,
-                          function: () {
-                            context.goNamed(ChatbotPage.routeName);
-                          })
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PrimaryText(
-                        text: "Chat Kamu",
-                        fontSize: 28,
-                        fontWeight: 700,
-                        lineHeight: 1.4,
-                        letterSpacing: -0.2,
-                        color: neutralDefault,
-                      ),
-                      SizedBox(height: 8),
-                      PrimaryText(
-                        text: "Mau nanya apa ke flora hari ini?",
-                        fontSize: 16,
-                        color: neutralSecondary,
-                        lineHeight: 1.4,
-                        letterSpacing: -0.1,
-                      ),
-                      SizedBox(height: 28),
-                      InkWell(
-                        onTap: () {
-                          context.pushNamed(ChatbotPage.routeName);
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: Color(0xFFF2F5F8))),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      Constants.icFloraProfile, width: 32,),
-                                    SizedBox(width: 16),
-                                    PrimaryText(
-                                      text: "Flora",
-                                      fontSize: 14,
-                                      lineHeight: 1.4,
-                                      letterSpacing: -0.1,
-                                      fontWeight: 700,
-                                      color: neutralDefault,
-                                    )
-                                  ],
-                                ),
-                                Icon(Icons.keyboard_arrow_right_rounded, color: neutralAccent1,)
-                              ],
+                          color: neutralDefault,
+                        ),
+                        SizedBox(height: 8),
+                        PrimaryText(
+                          text:
+                              "Flora adalah chatbot yang akan membantu menjawab semua pertanyaan kamu seputar lingkungan.",
+                          fontSize: 16,
+                          color: neutralSecondary,
+                          lineHeight: 1.4,
+                          letterSpacing: -0.1,
+                        ),
+                        SizedBox(height: 28),
+                        PrimaryButton(
+                            width: double.infinity,
+                            text: "Chat",
+                            fontSize: 16,
+                            textColor: whiteColor,
+                            fontWeight: 700,
+                            lineHeight: 1.4,
+                            letterSpacing: -0.2,
+                            function: () {
+                              context.goNamed(ChatbotPage.routeName);
+                            })
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PrimaryText(
+                          text: "Chat Kamu",
+                          fontSize: 28,
+                          fontWeight: 700,
+                          lineHeight: 1.4,
+                          letterSpacing: -0.2,
+                          color: neutralDefault,
+                        ),
+                        SizedBox(height: 8),
+                        PrimaryText(
+                          text: "Mau nanya apa ke flora hari ini?",
+                          fontSize: 16,
+                          color: neutralSecondary,
+                          lineHeight: 1.4,
+                          letterSpacing: -0.1,
+                        ),
+                        SizedBox(height: 28),
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(ChatbotPage.routeName);
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Color(0xFFFFFFFF),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: Color(0xFFF2F5F8))),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        Constants.icFloraProfile,
+                                        width: 32,
+                                      ),
+                                      SizedBox(width: 16),
+                                      PrimaryText(
+                                        text: "Flora",
+                                        fontSize: 14,
+                                        lineHeight: 1.4,
+                                        letterSpacing: -0.1,
+                                        fontWeight: 700,
+                                        color: neutralDefault,
+                                      )
+                                    ],
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_right_rounded,
+                                    color: neutralAccent1,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-          )
-        ],
+                        )
+                      ],
+                    ),
+            ),
+            SizedBox(
+              height: 100,
+            )
+          ],
+        ),
       ),
     );
   }

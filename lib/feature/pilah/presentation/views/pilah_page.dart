@@ -76,23 +76,32 @@ class _PilahPageState extends State<PilahPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            context.read<PilahCubit>().pickImage(context, ImageSource.camera);
-                          },
-                          child: ShortcutWidget(
-                              icon: Constants.icCamera,
-                              text: "Pakai Kamera",
-                              desc: "Cekrek! langsung kepilah"),
+                        Expanded(
+                          flex: 7,
+                          child: InkWell(
+                            onTap: () {
+                              context.read<PilahCubit>().pickImage(context, ImageSource.camera);
+                            },
+                            child: ShortcutWidget(
+                                icon: Constants.icCamera,
+                                text: "Pakai Kamera",
+                                desc: "Cekrek! langsung kepilah"),
+                          ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            context.read<PilahCubit>().pickImage(context, ImageSource.gallery);
-                          },
-                          child: ShortcutWidget(
-                              icon: Constants.icImage,
-                              text: "Upload Gambar",
-                              desc: "Satset! langsung kepilah"),
+                        Expanded(
+                          flex: 1,
+                          child: Container()),
+                        Expanded(
+                          flex: 7,
+                          child: InkWell(
+                            onTap: () {
+                              context.read<PilahCubit>().pickImage(context, ImageSource.gallery);
+                            },
+                            child: ShortcutWidget(
+                                icon: Constants.icImage,
+                                text: "Upload Gambar",
+                                desc: "Satset! langsung kepilah"),
+                          ),
                         ),
                       ],
                     ),

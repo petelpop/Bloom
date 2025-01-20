@@ -16,8 +16,6 @@ class ShortcutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(
-          minHeight: 110, maxHeight: 120, minWidth: 180, maxWidth: 193),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           color: whiteColor,

@@ -167,6 +167,7 @@ class _LokaPageState extends State<LokaPage> {
                       PrimaryButton(
                         width: double.infinity,
                         text: "Lihat di GMaps",
+                        fontWeight: 600,
                         height: 40,
                         function: () async {
                           if (nearestLocation?.latitude != null) {
