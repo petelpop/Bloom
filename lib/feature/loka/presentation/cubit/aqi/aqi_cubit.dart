@@ -66,7 +66,7 @@ class AqiLokaCubit extends Cubit<LokaAqiState> {
       double latitude = position.latitude;
       double longitude = position.longitude;
 
-      double distance = 500;
+      double distance = 100;
       double latOffset = distance / 110.574;
       double lngOffset = distance / (111.320 * cos(latitude * (pi / 180)));
 

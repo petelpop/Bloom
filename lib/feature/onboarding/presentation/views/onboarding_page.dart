@@ -124,7 +124,7 @@ class OnboardingPage extends StatelessWidget {
                           PrimaryButton(
                             text: "Skip",
                             function: () {
-                              context.pushNamed(MainPage.routeName);
+                              context.goNamed(MainPage.routeName);
                             },
                             fontSize: 16,
                             fontWeight: 700,
@@ -139,7 +139,7 @@ class OnboardingPage extends StatelessWidget {
                             text: state.isLastPage == true ? "Selesai" : "Lanjut",
                             function: () {
                               if (state.isLastPage == true) {
-                                context.pushNamed(MainPage.routeName);
+                                context.goNamed(MainPage.routeName);
                               } else {
                                 _pageController.nextPage(
                                   duration: const Duration(milliseconds: 200), 

@@ -151,7 +151,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                             directionArrowMarker:
                                 MarkerIcon(icon: Icon(Icons.location_history))),
                         zoomOption: ZoomOption(
-                            initZoom: 10, minZoomLevel: 5, maxZoomLevel: 19))),
+                            initZoom: 13, minZoomLevel: 13, maxZoomLevel: 19))),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Container(

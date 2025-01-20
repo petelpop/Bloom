@@ -2,6 +2,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/home/presentation/methods/info_widget.dart';
+import 'package:bloom/feature/main/cubit/main_page_cubit.dart';
 import 'package:bloom/utils/modal_bottom.dart';
 import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
@@ -204,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                         flex: 7,
                         child: InkWell(
                           onTap: () {
-                            context.pushNamed(PilahPage.routeName);
+                            context.read<MainPageCubit>().setPage(1);
                           },
                           child: ShortcutWidget(
                               icon: Constants.icBox,
@@ -219,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                         flex: 7,
                         child: InkWell(
                           onTap: () {
-                            context.pushNamed(FloraPage.routeName);
+                            context.read<MainPageCubit>().setPage(3);
                           },
                           child: ShortcutWidget(
                               icon: Constants.icChatDots,
@@ -231,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      context.pushNamed(LokaPage.routeName);
+                            context.read<MainPageCubit>().setPage(2);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(top: 14, bottom: 24),

@@ -2,6 +2,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_button.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/feature/loka/presentation/views/loka_page.dart';
 import 'package:bloom/feature/pilah/data/model/pilah.dart';
 import 'package:bloom/feature/pilah/presentation/cubit/pilah_cubit.dart';
 import 'package:bloom/utils/logger_service.dart';
@@ -302,7 +303,9 @@ class _ResultPageState extends State<ResultPage> {
                   fontWeight: 700,
                   width: double.infinity,
                   text: "Lihat Tempat Sampah Terdekat",
-                  function: () {},
+                  function: () {
+                    context.goNamed(LokaPage.routeName);
+                  },
                 )
               ],
             ),
