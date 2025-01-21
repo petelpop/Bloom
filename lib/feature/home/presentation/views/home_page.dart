@@ -94,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                       ToastWidget.showToast(context, 
                       message: "terjadi kesalahan, silahkan coba lagi!",
                       position: ToastPosition.BOTTOM,
-                      duration: Duration(seconds: 2));
+                      duration: Duration(seconds: 2),
+                      color: Colors.red
+                      );
                     }
                   }, builder: (context, state) {
                     LoggerService.error("ini state sekarang $state");

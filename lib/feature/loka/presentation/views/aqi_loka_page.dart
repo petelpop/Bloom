@@ -67,7 +67,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
 
       LoggerService.log("info data ${item.aqi}");
       // markerFutures.add(
-        await controller.addMarker(
+      await controller.addMarker(
         GeoPoint(latitude: item.lat!, longitude: item.lon!),
         markerIcon: MarkerIcon(
           iconWidget: AnimatedScale(
@@ -91,10 +91,10 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
             ),
           ),
         ),
-      // )
+        // )
       );
     }
-      // await Future.wait(markerFutures);
+    // await Future.wait(markerFutures);
   }
 
   @override
@@ -122,7 +122,8 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
             ToastWidget.showToast(context,
                 message: "terjadi kesalahan, silahkan coba lagi!",
                 position: ToastPosition.BOTTOM,
-                duration: Duration(seconds: 2));
+                duration: Duration(seconds: 2),
+                color: Colors.red);
           }
         },
         builder: (context, state) {
@@ -195,7 +196,9 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
               ],
             );
           } else {
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

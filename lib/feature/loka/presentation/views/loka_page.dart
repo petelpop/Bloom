@@ -105,7 +105,7 @@ class _LokaPageState extends State<LokaPage> {
                   osmOption: OSMOption(
                       markerOption: MarkerOption(),
                       zoomOption: ZoomOption(
-                          initZoom: 15, minZoomLevel: 15, maxZoomLevel: 19)),
+                          initZoom: 17, minZoomLevel: 15, maxZoomLevel: 19)),
                   onMapIsReady: (_) async {
                     if (_) {
                       await controller.changeLocation(

@@ -6,8 +6,8 @@ class DioClient {
   final Dio _dio = Dio();
 
   DioClient() {
-    _dio.options.connectTimeout = Duration(milliseconds: 15000);
-    _dio.options.receiveTimeout = Duration(milliseconds: 3000);
+    _dio.options.connectTimeout = Duration(milliseconds: 10000);
+    _dio.options.receiveTimeout = Duration(milliseconds: 10000);
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         LoggerService.log('Request: ${options.method} ${options.uri}');
