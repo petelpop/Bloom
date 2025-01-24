@@ -1,5 +1,6 @@
 import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/primary_text.dart';
+import 'package:bloom/feature/loka/presentation/cubit/loka/loka_cubit.dart';
 import 'package:bloom/utils/shimmer_card.dart';
 import 'package:bloom/feature/home/presentation/cubit/aqi_cubit.dart';
 import 'package:bloom/feature/home/presentation/methods/status_failed_widget.dart';
@@ -37,6 +38,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     context.read<AqiLokaCubit>().getLatLng();
+    context.read<LokaCubit>().getLocation();
     // });
   }
 
@@ -47,11 +49,10 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
 
     LoggerService.info("item length ${data.length}");
     for (var item in data) {
+      // final item = item;
       Color? colorAqi;
       dynamic aqiParse = item.aqi != "-" ? double.parse(item.aqi!) : "-";
-      if (aqiParse == "-") {
-        colorAqi = neutralAccent1;
-      } else if (aqiParse <= 50) {
+        if (aqiParse <= 50) {
         colorAqi = primaryColor600;
       } else if (aqiParse <= 100) {
         colorAqi = moderatColor500;
@@ -61,8 +62,10 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
         colorAqi = tidakSehatBColor600;
       } else if (aqiParse <= 300) {
         colorAqi = tidakSehatBColor800;
-      } else {
+      } else if (aqiParse <= 1000) {
         colorAqi = beracunColor950;
+      } else {
+        colorAqi = neutralAccent1;
       }
 
       LoggerService.log("info data ${item.aqi}");
@@ -70,23 +73,18 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
       await controller.addMarker(
         GeoPoint(latitude: item.lat!, longitude: item.lon!),
         markerIcon: MarkerIcon(
-          iconWidget: AnimatedScale(
-            scale: 1,
-            curve: Curves.easeOut,
-            duration: Duration(milliseconds: 3000),
-            child: Container(
-              width: 48,
-              height: 48,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: colorAqi),
-              child: Center(
-                child: PrimaryText(
-                  text: item.aqi,
-                  color: whiteColor,
-                  fontWeight: 900,
-                  fontSize: 10.67,
-                  letterSpacing: -0.13,
-                ),
+          iconWidget: Container(
+            width: 48,
+            height: 48,
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: colorAqi),
+            child: Center(
+              child: PrimaryText(
+                text: item.aqi,
+                color: whiteColor,
+                fontWeight: 900,
+                fontSize: 10.67,
+                letterSpacing: -0.13,
               ),
             ),
           ),
@@ -156,7 +154,7 @@ class _AqiLokaPageState extends State<AqiLokaPage> {
                             directionArrowMarker:
                                 MarkerIcon(icon: Icon(Icons.location_history))),
                         zoomOption: ZoomOption(
-                            initZoom: 13, minZoomLevel: 13, maxZoomLevel: 19))),
+                            initZoom: 10, minZoomLevel: 10, maxZoomLevel: 19))),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Container(

@@ -2,6 +2,7 @@ import 'package:bloom/common/colors.dart';
 import 'package:bloom/common/constants.dart';
 import 'package:bloom/common/primary_text.dart';
 import 'package:bloom/feature/home/presentation/methods/info_widget.dart';
+import 'package:bloom/feature/loka/presentation/cubit/loka/loka_cubit.dart';
 import 'package:bloom/feature/main/cubit/main_page_cubit.dart';
 import 'package:bloom/utils/modal_bottom.dart';
 import 'package:bloom/utils/shimmer_card.dart';
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     context.read<AqiCubit>().getLocation();
+    context.read<LokaCubit>().getLocation();
   }
 
   @override
