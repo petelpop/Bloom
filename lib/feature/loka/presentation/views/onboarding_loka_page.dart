@@ -52,13 +52,15 @@ class OnboardingLokaPage extends StatelessWidget {
                       Expanded(
                         flex: 7,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(14),
                           onTap: () {
-                            context.pushNamed(LokaPage.routeName);
+                            // context.pushNamed(LokaPage.routeName);
                           },
                           child: ShortcutWidget(
                               icon: Constants.icTrash,
                               text: "Tempat Sampah",
-                              desc: "Dicariin yang terdekat"),
+                              desc: "Dicariin yang terdekat",
+                              disable: true),
                         ),
                       ),
                       Expanded(
@@ -67,6 +69,7 @@ class OnboardingLokaPage extends StatelessWidget {
                       Expanded(
                         flex: 7,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(14),
                           onTap: () {
                             context.pushNamed(AqiLokaPage.routeName);
                           },

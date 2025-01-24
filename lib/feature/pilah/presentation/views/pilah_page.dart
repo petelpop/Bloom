@@ -79,6 +79,7 @@ class _PilahPageState extends State<PilahPage> {
                         Expanded(
                           flex: 7,
                           child: InkWell(
+                            borderRadius: BorderRadius.circular(14),
                             onTap: () {
                               context.read<PilahCubit>().pickImage(context, ImageSource.camera);
                             },
@@ -94,6 +95,7 @@ class _PilahPageState extends State<PilahPage> {
                         Expanded(
                           flex: 7,
                           child: InkWell(
+                            borderRadius: BorderRadius.circular(14),
                             onTap: () {
                               context.read<PilahCubit>().pickImage(context, ImageSource.gallery);
                             },

@@ -208,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 7,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(14),
                           onTap: () {
                             context.read<MainPageCubit>().setPage(1);
                           },
@@ -223,6 +224,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 7,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(14),
                           onTap: () {
                             context.read<MainPageCubit>().setPage(3);
                           },
@@ -235,6 +237,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   InkWell(
+                    highlightColor: Colors.transparent,
                     onTap: () {
                             context.read<MainPageCubit>().setPage(2);
                     },

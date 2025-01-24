@@ -107,6 +107,7 @@ class _FloraPageState extends State<FloraPage> {
                           ),
                           SizedBox(height: 28),
                           InkWell(
+                            borderRadius: BorderRadius.circular(14),
                             onTap: () {
                               context.pushNamed(ChatbotPage.routeName);
                             },
